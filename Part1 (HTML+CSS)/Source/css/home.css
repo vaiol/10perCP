@@ -1,0 +1,223 @@
+body {
+	background: black;
+	font-family: Verdana;
+	font-size: 25px;
+	margin: 0;
+	padding: 0;
+}
+
+
+
+.default {
+	margin: 0 auto;
+	width: 1290px;
+}
+
+#header, #menu, #banner, #chooseBar, #offer, #info, .footBarP, #footer {
+	width: 100%;
+}
+
+
+
+
+/*--------------PART 1 HEADER*/
+#header {
+	display: block;
+	background: #242424;
+	height: 65px;
+	border-bottom: 1px solid black;
+	
+}
+
+
+#headerLogin {
+	display: inline-block;
+	width: 200px;
+	float: right;
+	color: #737373;
+	text-align: center;
+	line-height: 65px;
+	font-size: 17px;
+	border-left: 1px solid #343434;
+	border-right: 1px solid #343434;
+}
+
+#headerName {
+	display: inline-block;
+	color: #57C39F;
+	line-height: 65px;
+	font-size: 40px;
+	width: 220px;
+}
+
+#headerSearch {
+	display: inline-block;
+	width: 40px;
+	float: right;
+	height: 40px;
+	margin-top: 20px;
+}
+
+#headerSearch>img {
+	height: 25px;
+}
+
+/*--------------PART 2 MENU*/
+
+#menu { 
+	background: #FFFFFF;
+	border-top: 1px solid #464646;
+	height: 80px;
+	color: #2F2F2F;
+	font-size: 23px;
+	overflow: hidden;
+	text-align: center;
+}
+
+#menuHome, #menuProducts, #menuAbout, #menuPages, #menuBlog, #menuContact, #menuStars, #menuBox {
+	border-left: 2px solid #EFEFEF;
+	float: left;
+	width: 120px;
+	line-height: 80px;
+	display: inline-block;
+}
+
+#menuHome {
+	width: 120px;
+}
+
+#menuProducts {
+	width: 153px;
+}
+
+#menuAbout {
+	width: 127px;
+}
+
+
+#menuBlog {
+	width: 106px;
+}
+
+#menuContact {
+	width: 140px;
+	border-right: 2px solid #EFEFEF;
+}
+
+#menuStars {
+	overflow: hidden;
+	border-left: 2px solid #CECECE;
+	float: right;
+	width: 125px;
+	color: white;
+	line-height: 89px;
+}
+
+#menuBox {
+	overflow: hidden;
+	color: white;
+	border-left: 2px solid #CECECE;
+	border-right: 2px solid #CECECE;
+	float: right;
+	line-height: 89px;
+	width: 125px;
+}
+
+#menuBox>img {
+	height: 28px;
+}
+
+#menuStars>img {
+	height: 28px;
+}
+
+#menuBox>div {
+	font-size: 18px;
+	margin-top: 20px;
+	font-weight: 800;
+	overflow: hidden;
+	line-height: 28px;
+	display: inline-block;
+	height: 28px;
+	width: 28px;
+	background: #57C39F;
+	border: 1px solid #3CA684;
+	border-radius: 5px;
+}
+
+#menuStars>div {
+	font-weight: 800;
+	font-size: 18px;
+	margin-top: 20px;
+	overflow: hidden;
+	line-height: 28px;
+	display: inline-block;
+	height: 28px;
+	width: 28px;
+	background: #ADADAD;
+	border: 1px solid #8F8F8F;
+	border-radius: 5px;
+}
+
+/*--------------PART 3 BANNER*/
+
+#banner {
+	height: 630px;
+	background: #F0ECE9;
+	color: #252525;
+	font-size: 24px;
+	
+	overflow: hidden;
+}
+
+#bannerImg {
+	display: inline-block;
+	float: left;
+}
+
+#bannerPrice {
+	text-align: center;
+	height: 92px;
+	width: 92px;
+	background: #57C39F;
+	border: 1px solid #3CA684;
+	font-size: 18px;
+	color: white;
+	line-height: 92px;
+	margin: 20px;
+	margin-left: 0;
+}
+
+#bannerHead {
+
+	margin: 20px;
+	margin-left: 0;
+	font-size: 50px;
+}
+
+.bannerButton {
+	text-align: center;
+	margin: -5px;
+	margin-top: 16px;
+	margin-left: 0;
+	display: inline-block;
+	background: white;
+	height: 55px;
+	width: 55px;
+	line-height: 62px;
+}
+
+.bannerButton>img {
+	height: 25px;
+}
+
+
+#bannerBlock {
+	float: left;
+	display: inline-block;
+	margin: 55px;
+}
+
+#banner>.default {
+	height: 630px;
+}
