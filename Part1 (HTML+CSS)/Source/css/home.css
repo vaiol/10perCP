@@ -36,6 +36,18 @@ a {
     -moz-font-feature-settings: "calt=0,liga=0";
 }
 
+@font-face {
+    font-family: 'MavenProRegular';
+    src: url('../font/maven_pro_regular-webfont.eot');
+    src: url('../font/maven_pro_regular-webfont.eot?#iefix') format('eot'),
+         url('../font/maven_pro_regular-webfont.woff') format('woff'),
+         url('../font/maven_pro_regular-webfont.ttf') format('truetype'),
+         url('../font/maven_pro_regular-webfont.svg#webfontOM8fITNz') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 [class^="icon-"], [class*=" icon-"] {font-family:'WebHostingHub-Glyphs';background:none;width:auto;height:auto;font-style:normal}
 .icon-search:before{content:'\f0c5'}
 .icon-eye-open:before{content:'\f2b5'}
@@ -422,7 +434,7 @@ a {
 /*--------------PART 6 CONTENT*/
 
 #content {
-	height: 1470px;
+	height: 1415px;
 	background: #EBE7DE
 }
 
@@ -544,8 +556,102 @@ a {
 #contentTextBox1, #contentTextBox2, #contentTextBox3 {
 	height: 255px;
 	background: #DEDBD4;
-	width: 100px;
+	width: 305px;
 	display: inline-block;
+	margin: 0 5px;
 }
 
+#contentTextBox3 {
+	width: 630px;
+}
+
+
+/*--------------PART 6 FootBARP*/
+#footBarP1 {
+	background: #242424;
+	height: 330px;
+}
+
+#delim {
+	height: 2px;
+	background: black;
+}
+
+#footBarP2 {
+	background: #242424;
+	height: 140px;
+
+}
+
+.footBox {
+	display: inline-block;
+	width: 350px;
+	height: 225px;
+	background: #2E2E2E;
+	margin: 54px 37px;
+}
+
+
+
+#footEmail, #footOkButton, .footButtons {
+	height: 50px;
+	width: 50px;
+	background: #2E2E2E;
+	color: #767676;
+	margin: 42px 6px;
+	display: inline-block;
+	line-height: 50px;
+	font-size: 17px;
+}
+
+.footButtons {
+	float: right;
+	text-align: center;
+}
+
+#footEmail {
+	width: 292px;
+	margin-right: 0;
+}
+
+#footOkButton {
+	margin-left: -8px;
+	background: #7D7D7D;
+	text-align: center;
+	color: #2E2E2E;
+}
+
+.footDelim {
+	display: inline-block;
+	width: 23px;
+	background: white;
+}
+
+
+#footEmail>span {
+	margin-left: 15px;
+}
+
+/*--------------PART 7 Footer*/
+
+#footer {
+	height: 120px;
+	background: #2E2E2E;
+	color: #ABABAB;
+	font-size: 13px;
+}
+
+#footerDesigner {
+	display: inline-block;
+	height: 50px;
+	line-height: 20px;
+	margin: 33px 0px;
+}
+
+#footerOther {
+	display: inline-block;
+	height: 120px;
+	line-height: 120px;
+	float: right;
+}
 
