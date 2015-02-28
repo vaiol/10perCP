@@ -2,7 +2,7 @@
 <p>Completing quests from KPI Check Point: </p>
 <h2>Part 1: Design</h2>
 <h3>(HTML & CSS)</h3>
-Done by 90%
+Done by 100%
 <img src="https://raw.githubusercontent.com/vaiol/10perCP/master/Part1%20(HTML+CSS)/WhatHasBeenDone.jpg"></img>
 <b>Features:</b>
 <ul>
