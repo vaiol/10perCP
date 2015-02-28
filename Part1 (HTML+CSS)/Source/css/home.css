@@ -559,12 +559,49 @@ a {
 	width: 305px;
 	display: inline-block;
 	margin: 0 5px;
+	overflow: hidden;
+	font-size: 18px;
+}
+
+#contentTextBox3 span {
+	font-size: 16px;
+	margin: 17px 7px;
+}
+
+#contentTextBox2 span {
+	font-size: 16px;
+	margin: 17px 7px;
+}
+
+#contentTextBox1 span {
+	font-size: 16px;
+	margin: 17px 7px;
 }
 
 #contentTextBox3 {
 	width: 630px;
 }
 
+.contentDate {
+	display: inline-block;
+	height: 50px;
+	width: 50px;
+	background: #57C39F;
+	color: white;
+	font-weight: 800px;
+	line-height: 20px;
+	margin: 0px;
+	text-align: center;
+	font-size: 16px;
+}
+.contentDate b {
+	display: inline-block;
+	margin-top: 5px;
+}
+
+.contentInBox {
+	margin: 38px 28px;
+}
 
 /*--------------PART 6 FootBARP*/
 #footBarP1 {
