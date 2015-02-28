@@ -621,14 +621,34 @@ a {
 }
 
 .footBox {
+	overflow: hidden;
 	display: inline-block;
 	width: 350px;
-	height: 225px;
-	background: #2E2E2E;
+	height: 300px;
 	margin: 54px 37px;
 }
 
+.footBox div {
+	font-size: 20px;
+	margin: 5px 0px;
+	color: #696969;
+	margin-bottom: 15px;
+}
 
+.footBox>span {
+	font-size: 15px;
+	color:#B5B5B5;
+}
+
+.footBoxLight {
+	display: block;
+	margin: 4px;
+	color: #DFDFDF;
+}
+
+.footBox i {
+	color: #57C39F;
+}
 
 #footEmail, #footOkButton, .footButtons {
 	height: 50px;
@@ -669,6 +689,16 @@ a {
 	margin-left: 15px;
 }
 
+.footImg {
+	display: inline-block;
+}
+
+.footImg img {
+	display: inline-block;
+	height: 75px;
+	width: 105px;
+	margin: -8px 0;
+}
 /*--------------PART 7 Footer*/
 
 #footer {
