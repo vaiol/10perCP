@@ -1,7 +1,16 @@
 <h1>KPI Check Point</h1>
 <p>Completing quests from KPI Check Point: </p>
 <h2>Part 1: Design</h2>
-<h3>(HTML & CSS)</h3>
+<b>Information:</b>
+<ul>
+        <li> 
+               To create, I spent 20 hours
+        </li>
+        <li> 
+                Resolution: 1920x1080
+        </li>
+
+</ul>
 Done by 100%
 <img src="https://raw.githubusercontent.com/vaiol/10perCP/master/Part1%20HTML+CSS/WhatHasBeenDone.jpg"></img>
 <b>Features:</b>
