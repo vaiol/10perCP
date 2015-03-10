@@ -1,5 +1,30 @@
 <h1>KPI Check Point</h1>
 <p>Completing quests from KPI Check Point: </p>
+<h2>Part 2: Java Core</h2>
+<b>Information:</b>
+<ul>
+        <li> 
+               Implementation of the course is in the project directory in "Part2 Java".
+        </li>
+        <li> 
+                 Each folder "Task №" - is an individual project implements the corresponding task.
+        </li>
+        <li> 
+                  Use Maven to build all the projects.
+        </li>
+</ul>
+<b>How to run:</b>
+<ul>
+        <li> 
+                Open pom.xml in IDE (for example InteliJ IDEA)
+        </li>
+        <li> 
+                mvn compile and Run Main -> com.checkpoint,vaiol.Main
+        </li>
+        <li> 
+                mvn compile and Run Test -> mvn test
+        </li>
+</ul>
 <h2>Part 1: Design</h2>
 <b>Information:</b>
 <ul>
