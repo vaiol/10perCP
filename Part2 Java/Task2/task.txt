@@ -1,0 +1,4 @@
+Implement 3 data structures that use all features of LinkedList, ArrayList, Map. 
+This data structures should have all appropriate functionalities and also should automatically remove “old” objects. 
+“Old” means object that were created earlier then some date/time. 
+Implement unit tests for this functionality. Date/time should be input param.

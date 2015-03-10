@@ -1,0 +1,2 @@
+Implement app that calculate frequency of words in text using several threads. 
+Path to the file, count of threads are given params, separated by space in console. Create unit tests for this functionality.

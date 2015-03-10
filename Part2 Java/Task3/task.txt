@@ -1,0 +1,5 @@
+Implement an app that calculate a sum of series 2^(i - (-1)^i). 
+i from 1 to n. Calculation should be done in parallel mode. 
+Input params: n, count of threads. Result should be the same on all runs for specific n. 
+Please, implement 2 variants: with executors and creating your own thread pool. Implement unit tests for this functionality. 
+Please, implement ability to run this program from console and from file. Example: 5 7 (first number is n, then space, then count of threads, line break).

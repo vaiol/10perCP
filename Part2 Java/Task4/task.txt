@@ -1,0 +1,6 @@
+Create a program that accept expression that describe the phone number:
+The main part of the phone consists of three groups, each with a length from 2 to 3 numbers (eg., 55 55 555);
+Optionally before the main number - area code inside the country, 3-4 numbers (999, 2345);
+Optionally before the area code - the international country code, starting with a "+" (eg., 7) or service area code (8);
+All of the phone parts can be connected with a space or a hyphen; area code can optionally be taken in parentheses.
+This program should accept 2 modes: inputs from console, inputs from file. File example. Implement unit tests for this functionality.

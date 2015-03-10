@@ -1,0 +1,23 @@
+Course work. Mobile networks
+
+Implement a mobile network. Think about your mobile phones. Try to emulate real system. You have several mobile operators and can instantiate new one: Life, MTS, Kievstar and so on.
+Mobile operators have
+
+Different phone numbers
+Different rates for mobile services inside internal network
+Different rates for mobile connection with other mobile operators
+Incoming and outgoing calls can be charged or can be free (it depends on the package). Mobile operators should have ability to change their settings easily
+Subscription fee may be charged on monthly basis, 25 days basis or can not be charged (or on your choice)
+The consumer can change mobile package (this may cost some money)
+The consumer can have different discounts if the person stays with one mobile operator during some period
+The consumer can charge his/her account with money or with minutes (f.e. package that allow you to talk free 100 minutes per day and you pay 5 hrn each day automatically OR just charge your account with 20 hrns that converts to 5000 minutes for month). It’s up to your choice.
+If some package program is old, mobile operators can transfer all consumers to new one. This should be done easily. Do not forget to inform consumers about this transfer. Implement notification system.
+Consumers should receive notifications if something happened with his/her package/subscription/or account doesn’t contain enough money to perform an operation, continue automatic subscription and so on. The consumer should receive feedbacks about successful operations or errors during execution with user friendly descriptions. Also consumer should receive notifications if person is subscribed for some services and money are charged automatically. The consumer should receive notifications if his/her account doesn’t contain enough money or subscription is going to finish.
+The consumer may have ability to transfer their money from one mobile account (phone number) to another inside internal network, but it’s forbidden for accounts in different networks. This service might cost something or might not.
+Implement mobile towers. Mobile towers can accept calls from consumers that are located in 1 km (this distance is param and can be changed). Also mobile towers can accept calls just from one mobile operator or from others if this tower is owned by one mobile operator or is shared with others. Mobile tower has restrictions on amount of connections in current time (for example 10 connections). During implementation of call/SMS functions your program should connect to the nearest available (with available connections) tower that accept calls from consumer’s mobile operator and is located in acceptable distance (it’s 1 km in this example). Try to emulate talk of 2 consumers. Try to emulate talks of several groups of consumers.
+Implement call/SMS functions. Remember that it’s concurrent environment. Emulate busy status when consumer is talking with other consumer.
+Try to emulate all actions with mobile package (subscribe, unsubscribe, shift to another mobile package, charge account, use your money/minutes while talking (emulate “mobile incoming call”, “mobile outgoing call”, “mobile incoming SMS”, “mobile outgoing SMS”, “mobile internet”), try to make your account zero or less than zero balanced, charge account again and try to buy a service that cost more than your current balance, receive a notification that you do not have enough money), emulate connection inside internal network, or with other operators (you need to create several consumers). Test your application properly with several users, emulate connections, sending/receiving SMS, calls. Implement several operators with different mobile towers. You can simplify functionality of mobile towers and imagine that all consumers are located in points that are not changed (it means that distance for one consumer to towers doesn't change during the period of your app working). However, if you want to have a dynamic environment you are welcome.
+
+Do not afraid to use design patterns. Try to find and implement at least 2 design patterns that matches your situation. Implement unit test with mocked objects for whole system.
+
+Please, note that all mobile packages and costs should be easily changed (classes contains setters, getters, appropriate constructors and architecture design). You are welcome to use database storages if you want, but it's optional. If you decide to use it, you can use also build automation tool for resolving dependencies (Maven, Gradle, etc.).

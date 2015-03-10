@@ -1,0 +1,4 @@
+Implement application that “shuffle” an array randomly. 
+Just 25% of array elements should be “shuffled”. 
+“Shuffled” positions are chosen randomly too. 
+Implement unit tests for this functionality. Array can be multidimensional. Array is input param.
