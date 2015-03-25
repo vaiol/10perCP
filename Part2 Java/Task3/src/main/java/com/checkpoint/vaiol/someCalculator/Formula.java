@@ -1,4 +1,4 @@
-package com.checkpoint.vaiol.usingBigInteger;
+package com.checkpoint.vaiol.someCalculator;
 
 import java.math.BigInteger;
 

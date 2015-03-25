@@ -1,6 +1,6 @@
-package com.checkpoint.vaiol.usingSimpleInteger;
+package com.checkpoint.vaiol.someCalculator;
 
-import javax.naming.directory.InvalidAttributesException;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -10,32 +10,29 @@ public class Calculator {
     private int n;
     private int countOfThreads;
 
-    public Calculator(int n, int countOfThreads) throws InvalidAttributesException{
-        if(n > 31) {
-            throw new InvalidAttributesException();
-        }
+    public Calculator(int n, int countOfThreads) {
         this.n = n;
         this.countOfThreads = countOfThreads;
     }
 
-    public int calculate() {
+    public BigInteger calculate() {
         return calculate(n);
     }
 
-    public static int calculate(int n) {
+    public static BigInteger calculate(int n) {
         Result result = new Result(n);
-        for(int i = 1; i < n; i++) {
+        for(int i = 1; i <= n; i++) {
             result.add(Formula.getCalculations(i));
         }
         return result.getResult();
     }
 
 
-    public  int calculateWithThreads() {
+    public  BigInteger calculateWithThreads() {
         return calculateWithThreads(n, countOfThreads);
     }
 
-    public static int calculateWithThreads(int n, int countOfThreads) {
+    public static BigInteger calculateWithThreads(int n, int countOfThreads) {
         Result result = new Result(n);
         Thread[] threads = new Thread[countOfThreads];
         for (int i = 0; i < threads.length; i++) {
@@ -54,10 +51,10 @@ public class Calculator {
         return result.getResult();
     }
 
-    public int calculateWithExecutor() {
+    public BigInteger calculateWithExecutor() {
         return calculateWithExecutor(n, countOfThreads);
     }
-    public static int calculateWithExecutor(int n, int countOfThreads) {
+    public static BigInteger calculateWithExecutor(int n, int countOfThreads) {
         Result result = new Result(n);
         ExecutorService service = Executors.newFixedThreadPool(countOfThreads);
         for (int i = 1; i <= n; i++) {

@@ -20,8 +20,4 @@
     	<version>4.12</version>
     </dependency>
   </dependencies>
-  <build>
-    <sourceDirectory>src\main</sourceDirectory>
-    <testSourceDirectory>src\test</testSourceDirectory>
-  </build>
 </project>

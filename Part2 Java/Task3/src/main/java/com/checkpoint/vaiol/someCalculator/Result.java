@@ -1,4 +1,4 @@
-package com.checkpoint.vaiol.usingBigInteger;
+package com.checkpoint.vaiol.someCalculator;
 
 import java.math.BigInteger;
 
@@ -19,7 +19,7 @@ public class Result {
 
     synchronized public Integer getCount() {
         count++;
-        if(count < n) {
+        if(count <= n) {
             return count;
         } else {
             return null;

@@ -1,4 +1,4 @@
-package com.checkpoint.vaiol.usingBigInteger;
+package com.checkpoint.vaiol.someCalculator;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,9 +27,9 @@ public class Loader {
         List<Calculator> result = new ArrayList<Calculator>();
         for(String string : strings) {
             String[] num = string.split(" ");
-            System.out.println("Len: " + num.length);
-            System.out.println("1: \'" + num[0] + "\'");
-            System.out.println("2: \'" + num[1] + "\'");
+//            System.out.println("Len: " + num.length);
+//            System.out.println("1: \'" + num[0] + "\'");
+//            System.out.println("2: \'" + num[1] + "\'");
             int n = Integer.parseInt(num[0]);
             int countOfThreads = Integer.parseInt(num[1]);
             result.add(new Calculator(n, countOfThreads));
