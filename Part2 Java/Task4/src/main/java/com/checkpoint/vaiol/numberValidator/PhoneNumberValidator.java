@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Class for validate phone numbers.
+ * Class for validate phone numbers WITHOUT regular expressions.
  */
 public class PhoneNumberValidator {
 
