@@ -19,7 +19,7 @@ public class MainTest {
     @Test
     public void testCalcAndThreads() {
 
-        String tmpString = Loader.read("srcWithComments.java");
+        String tmpString = Loader.read("filesForTesting/srcWithComments.java");
 
         Pattern multilineComments = Pattern.compile("/\\*(?:[^*]*(?:\\*(?!/))*)*\\*/");
         Pattern singlelineComments = Pattern.compile("//.*\n");
@@ -32,7 +32,7 @@ public class MainTest {
 
         //delete comments
         tmpString = CodeCleaner.clean(tmpString);
-        Loader.write(tmpString, "srcWithoutComments.java");
+        Loader.write(tmpString, "filesForTesting/srcWithoutComments.java");
 
         //try to find comments
         regexMatcher = multilineComments.matcher(tmpString);
