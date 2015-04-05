@@ -38,7 +38,6 @@ public class WordCounter {
 
 
         int countOfLines = lines.size() / threadCount;
-        System.out.println(countOfLines);
 
         int i = 0;
         int c = 0;
@@ -57,7 +56,6 @@ public class WordCounter {
         i = 0;
         ExecutorService service = Executors.newFixedThreadPool(threadCount);
         for (String pieceOfText : text) {
-            System.out.println(pieceOfText);
             service.execute(new CounterThread(pieceOfText));
             i++;
         }
@@ -74,7 +72,7 @@ public class WordCounter {
      * Returns the number of times the word found in the text;
      */
     public int getCount(String word) {
-        return map.get(word);
+        return map.get(word.toLowerCase());
     }
 
     public Map<String, Integer> getMap() {
