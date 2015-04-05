@@ -1,1 +1,4 @@
-Thumbs.db
+*.db
+.idea
+target
+*.iml
