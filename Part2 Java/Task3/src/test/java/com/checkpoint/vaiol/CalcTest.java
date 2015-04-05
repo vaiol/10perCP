@@ -59,6 +59,7 @@ public class CalcTest {
         new File(path).delete();
     }
 
+
     @Test
     public void testCalculate() {
         //сравнение решения calculate() c какими либо известным константными решениями
