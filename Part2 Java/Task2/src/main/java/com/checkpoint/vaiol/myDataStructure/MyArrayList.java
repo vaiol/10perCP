@@ -140,12 +140,15 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public E get(int index) {
+        if(index >= currentSize || index < 0) {
+            throw new IndexOutOfBoundsException();
+        }
         return array[index].object;
     }
 
     @Override
     public E set(int index, E element) {
-        if(index > currentSize || index < 0) {
+        if(index >= currentSize || index < 0) {
             throw new IndexOutOfBoundsException();
         }
         E tmp = array[index].object;

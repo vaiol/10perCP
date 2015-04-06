@@ -8,20 +8,16 @@ public class MyLinkedList<E> implements List<E> {
     private LifeTimer lifeTimer;
     private int currentSize;
 
-    private Node mainNode;
+    private Node<E> mainNode;
 
 
     public MyLinkedList() {
-        mainNode = new Node<E>(null);
-        mainNode.next = mainNode;
-        mainNode.prev = mainNode;
-        currentSize = 0;
+        clear();
     }
 
     public void startLifeTimer(long lifetime) {
         this.lifetime = lifetime;
         lifeTimer = new LifeTimer();
-        LinkedList
     }
 
     public void stopLifeTimer() {
@@ -40,28 +36,8 @@ public class MyLinkedList<E> implements List<E> {
     }
 
     @Override
-    public boolean contains(Object o) {
-        return false;
-    }
-
-    @Override
-    public Iterator<E> iterator() {
-        return null;
-    }
-
-    @Override
-    public Object[] toArray() {
-        return new Object[0];
-    }
-
-    @Override
-    public <T> T[] toArray(T[] a) {
-        return null;
-    }
-
-    @Override
     public boolean add(E e) {
-        Node newNode = new Node<E>(e);
+        Node<E> newNode = new Node<E>(e);
         mainNode.prev.next = newNode;
         mainNode.prev = newNode;
         currentSize++;
@@ -70,24 +46,24 @@ public class MyLinkedList<E> implements List<E> {
 
     @Override
     public boolean remove(Object o) {
-        Node current = mainNode.next;
+        Node<E> current = mainNode.next;
         boolean b = false;
         while (current != mainNode) {
             if(current.value.equals(o)) {
                 current.prev.next = current.next;
                 current.next.prev = current.prev;
                 b = true;
+                currentSize--;
             }
             current = current.next;
         }
-        return false;
+        return b;
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public boolean containsAll(Collection<?> c) {
         for (Object object : c) {
-            if(! contains((E) object)) {
+            if(! contains(object)) {
                 return false;
             }
         }
@@ -125,21 +101,69 @@ public class MyLinkedList<E> implements List<E> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        Node<E> current = mainNode.next;
+        boolean b = false;
+        while (current != mainNode) {
+            if( ! c.contains(current.value)) {
+                remove(current.value);
+                b = true;
+            }
+            current = current.next;
+        }
+        return b;
     }
 
     @Override
     public void clear() {
-
+        mainNode = new Node<E>(null);
+        mainNode.next = mainNode;
+        mainNode.prev = mainNode;
+        currentSize = 0;
     }
 
     @Override
     public E get(int index) {
+        if(index > currentSize || index < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node<E> current = mainNode.next;
+        int i = 0;
+        while (current != mainNode || i >= currentSize) {
+            if(i == index) {
+                return current.value;
+            }
+            current = current.next;
+        }
         return null;
     }
 
     @Override
+    public boolean contains(Object o) {
+        Node<E> current = mainNode.next;
+        while (current != mainNode) {
+            if(current.value.equals(o)) {
+                return true;
+            }
+            current = current.next;
+        }
+        return false;
+    }
+
+    @Override
     public E set(int index, E element) {
+        if(index > currentSize || index < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node<E> current = mainNode.next;
+        int i = 0;
+        while (current != mainNode || i >= currentSize) {
+            if(i == index) {
+                E result = current.value;
+                current.value = element;
+                return result;
+            }
+            current = current.next;
+        }
         return null;
     }
 
@@ -164,6 +188,11 @@ public class MyLinkedList<E> implements List<E> {
     }
 
     @Override
+    public List<E> subList(int fromIndex, int toIndex) {
+        return null;
+    }
+
+    @Override
     public ListIterator<E> listIterator() {
         return null;
     }
@@ -174,17 +203,28 @@ public class MyLinkedList<E> implements List<E> {
     }
 
     @Override
-    public List<E> subList(int fromIndex, int toIndex) {
+    public Iterator<E> iterator() {
         return null;
     }
+
+    @Override
+    public Object[] toArray() {
+        return new Object[0];
+    }
+
+    @Override
+    public <T> T[] toArray(T[] a) {
+        return null;
+    }
+
 
     private class Node<E> {
         public Node(E value) {
             this.value = value;
             creationTime = System.currentTimeMillis();
         }
-        private Node next;
-        private Node prev;
+        private Node<E> next;
+        private Node<E> prev;
         private E value;
         private long creationTime;
     }
