@@ -487,6 +487,7 @@ public class MyLinkedList<E> implements List<E> {
                     while (current != head) {
                         if(System.currentTimeMillis() - current.creationTime > lifetime) {
                             remove(i);
+                            i--;
                         }
                         i++;
                         current = current.next;

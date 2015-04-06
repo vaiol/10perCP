@@ -14,170 +14,167 @@ import org.junit.Test;
 
 public class LinkedListTest {
 
-	private MyLinkedList<Integer> list;
-	private List<Integer> containsAllTrue;
-	private List<Integer> containsAllFalse;
-	private List<Integer> checkAddAll;
+	private List<Integer> list;
+	private List<Integer> contains;
+	private List<Integer> doesNotContain;
+	private List<Integer> addAll;
 	
 	@Before
-	public void init() {
+	public void initialize() {
 
-		this.list = new MyLinkedList<Integer>();
-		for(int i = 0; i<10; i++) {
-			this.list.add(new Integer(i));
+		list = new MyLinkedList<Integer>();
+		for(int i = 0; i < 10; i++) {
+			list.add(i);
 		}
-		
-		this.containsAllTrue = Arrays.asList(new Integer(0), new Integer(4), new Integer(9));
-		this.containsAllFalse = Arrays.asList(new Integer(-1),new Integer(2),new Integer(5));
-		this.checkAddAll = Arrays.asList(new Integer(13),new Integer(12),new Integer(11));
+		contains = Arrays.asList(0, 4, 9);
+		doesNotContain = Arrays.asList(-1, 2, 5);
+		addAll = Arrays.asList(13, 12, 11);
 	}
 	
-//	@Test
-//	public void temporalRemovement() throws InterruptedException {
-//
-//		MyLinkedList<Integer> ls = new MyLinkedList<Integer>();
-//
-//		for(int i = 0; i<15; i++) {
-//			ls.add(i);
-//			Thread.sleep(1000);
-//		}
-//
-//		MyLinkedList<Integer> toCompare = new MyLinkedList<Integer>();
-//
-//		for(int i=6; i<15; i++)
-//			toCompare.add(new Integer(i));
-//		Thread.sleep(40);
-//		assertEquals(toCompare, ls);
-//	}
+	@Test
+	public void testRemoveOldObject() throws InterruptedException {
+		MyLinkedList<Integer> linkedList = new MyLinkedList<Integer>();
+		linkedList.startLifeTimer(1000);
+
+		for(int i = 0; i < 10; i++) {
+			linkedList.add(i);
+		}
+		assertFalse(linkedList.isEmpty());
+		Thread.sleep(1010);
+		assertTrue(linkedList.isEmpty());
+	}
 	
 	@Test
 	public void testAdd() {
-		Assert.assertEquals(this.list.size(), 10);
-		Assert.assertEquals(new Integer(0), this.list.get(0));
-		Assert.assertEquals(new Integer(4), this.list.get(4));
-		Assert.assertEquals(new Integer(9), this.list.get(9));
+		Assert.assertEquals(list.size(), 10);
+		Assert.assertEquals(new Integer(0), list.get(0));
+		Assert.assertEquals(new Integer(4), list.get(4));
+		Assert.assertEquals(new Integer(9), list.get(9));
 	}
 	
 	
 	@Test 
-	public void testIndexualAdd(){
-		this.list.add(0,new Integer(11));
-		this.list.add(3,new Integer(12));
-		this.list.add(5,new Integer(13));
-		this.list.add(this.list.size()-1,new Integer(14));
+	public void testAddByIndex(){
+		list.add(1, 65);
+		list.add(2, 66);
+		list.add(7, 67);
+		list.add((list.size()), 68);
 
-		Assert.assertEquals(14,this.list.size());
-		assertEquals(new Integer(11),this.list.get(0));
-		assertEquals(new Integer(12),this.list.get(3));
-		assertEquals(new Integer(13),this.list.get(5));
-		assertEquals(new Integer(14),this.list.get(this.list.size()-1));
+		Assert.assertEquals(14, list.size());
+		assertEquals(new Integer(65),list.get(1));
+		assertEquals(new Integer(66),list.get(2));
+		assertEquals(new Integer(67),list.get(7));
+		assertEquals(new Integer(68),list.get(list.size()-1));
 	}
 	
 	@Test
 	public void testGet() {
 
-		Assert.assertEquals(new Integer(0),this.list.get(0));
-		Assert.assertEquals(new Integer(4),this.list.get(4));
-		Assert.assertEquals(new Integer(9),this.list.get(9));
+		Assert.assertEquals(new Integer(0),list.get(0));
+		Assert.assertEquals(new Integer(4),list.get(4));
+		Assert.assertEquals(new Integer(9),list.get(9));
 	}
 	
 	@Test
 	public void testSet(){
-		this.list.set(0, new Integer(15));
-		this.list.set(3, new Integer(16));
-		this.list.set(this.list.size()-1, new Integer(17));
-		Assert.assertEquals(new Integer(16),this.list.get(3));
-		Assert.assertEquals(new Integer(15),this.list.get(0));
-		Assert.assertEquals(new Integer(17),this.list.get(this.list.size()-1));
+		list.set(0, 25);
+		list.set(3, 34);
+		list.set(list.size() - 1, 27);
+		Assert.assertEquals(new Integer(34),list.get(3));
+		Assert.assertEquals(new Integer(25),list.get(0));
+		Assert.assertEquals(new Integer(27),list.get(list.size() - 1));
 
 	}
 	
 	@Test
 	public void testClear(){
-		this.list.clear();
-		Assert.assertEquals(0,this.list.size());
+		list.clear();
+		Assert.assertEquals(0, list.size());
 	}
 	
 	@Test
 	public void testContains() {
-		Assert.assertEquals(true,this.list.containsAll(this.containsAllTrue));
-		Assert.assertEquals(false,this.list.containsAll(this.containsAllFalse));		
+		Assert.assertEquals(true, list.containsAll(contains));
+		Assert.assertEquals(false, list.containsAll(doesNotContain));
 	}
 	
 	@Test
-	public void testContainsSingle() {
-		Assert.assertEquals(true,this.list.contains(new Integer(4)));
-		Assert.assertEquals(false,this.list.contains(new Integer(11)));		
+	public void testContainsOneElement() {
+		Assert.assertEquals(true, list.contains(new Integer(4)));
+		Assert.assertEquals(false, list.contains(new Integer(1423423423)));
 	}
 	
 	@Test
 	public void testIndexOf() {
-		Assert.assertEquals(4,this.list.indexOf(new Integer(4)));
-		Assert.assertEquals(0,this.list.indexOf(new Integer(0)));
-		Assert.assertEquals(9,this.list.indexOf(new Integer(9)));
-		Assert.assertEquals(-1,this.list.indexOf(new Integer(11)));
+		Assert.assertEquals(4,list.indexOf(4));
+		Assert.assertEquals(0,list.indexOf(0));
+		Assert.assertEquals(9,list.indexOf(9));
+		Assert.assertEquals(-1,list.indexOf(11));
 	}
 	
 	@Test
 	public void testAddAll() {
-		this.list.addAll(1,checkAddAll);
+		list.addAll(1, addAll);
 
-		for(int i=1, j=0; i<4; i++, j++)
-			assertEquals(this.checkAddAll.get(j),this.list.get(i));
+		for(int i = 1, j = 0; i < 4; i++, j++) {
+			assertEquals(addAll.get(j), list.get(i));
+		}
 	}
 	
 	@Test
-	public void testLastIndex() {
-		this.list.add(6,new Integer(3));
-		Assert.assertEquals(6, this.list.lastIndexOf(new Integer(3)));
-		Assert.assertEquals(-1, this.list.lastIndexOf(new Integer(11)));
-		Assert.assertEquals(1, this.list.lastIndexOf(new Integer(1)));
+	public void testLastIndexOf() {
+		list.add(6, 3);
+		Assert.assertEquals(6, list.lastIndexOf(3));
+		Assert.assertEquals(-1, list.lastIndexOf(11));
+		Assert.assertEquals(1, list.lastIndexOf(1));
 	}
 	
 	@Test 
 	public void testRemove() {
-		this.list.remove(new Integer(0));
-		this.list.remove(new Integer(4));
-		this.list.remove(new Integer(this.list.size()-1));
+		assertTrue(list.remove(new Integer(0)));
+		assertTrue(list.remove(new Integer(4)));
+		assertTrue(list.remove(new Integer(list.size()-1)));
 	}
 	
 	@Test 
-	public void testRemoveIndex() {
-		this.list.remove(0);
-		this.list.remove(4);
-		this.list.remove(this.list.size()-1);
-		
-		List<Integer> l = Arrays.asList(new Integer(0),new Integer(5),new Integer(9));
-		
-		for(Integer i : this.list) {
-			assertEquals(false,l.contains(i));
+	public void testRemoveByIndex() {
+		list.remove(0);
+		list.remove(4);
+		list.remove(list.size()-1);
+
+		List<Integer> l = Arrays.asList(0, 5, 9);
+
+		for(Integer i : list) {
+			assertEquals(false, l.contains(i));
 		}
 	}
 	
 	
 	@Test 
 	public void testRemoveAll(){
-		this.list.removeAll(this.containsAllTrue);
-		for(Integer i : this.list)
-			assertEquals(false,this.containsAllTrue.contains(i));
+		list.removeAll(contains);
+		for(Integer i : list) {
+			assertEquals(false, contains.contains(i));
+		}
 	}
 	
 	@Test 
 	public void testRetainAll(){
-		this.list.retainAll(this.containsAllTrue);
-		for(int i=0; i<this.containsAllTrue.size();i++)
-			assertEquals(this.containsAllTrue.get(i),this.list.get(i));
+		list.retainAll(contains);
+		for(int i = 0; i < contains.size(); i++) {
+			assertEquals(contains.get(i), list.get(i));
+		}
 	}
 	
 	@Test
 	public void testToArray() {
 		MyLinkedList<Integer> arr = new MyLinkedList<Integer>();
-		for(int i=0; i<5; i++){
+		for (int i = 0; i < 5; i++) {
 			arr.add(i);
 		}
 
 		Object o[] = arr.toArray();
-		for(int i=0; i<5; i++){
+		for (int i = 0; i < 5; i++) {
 			Assert.assertEquals(i, o[i]);
 		}
 	}
