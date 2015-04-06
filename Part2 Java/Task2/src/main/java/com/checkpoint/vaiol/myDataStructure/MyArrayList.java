@@ -1,10 +1,8 @@
 package com.checkpoint.vaiol.myDataStructure;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class MyArrayList<E> implements List<E> {
-
 
     private Entity<E>[] array;
     private int currentSize;
@@ -24,7 +22,8 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean add(E e) {
-        return false;
+        add(currentSize, e);
+        return true;
     }
 
     @Override
@@ -54,59 +53,65 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean contains(Object o) {
+        for(int i = 0; i < currentSize; i++) {
+            if(array[i].object.equals(o)) {
+                return true;
+            }
+        }
         return false;
-    }
-
-    @Override
-    public Iterator<E> iterator() {
-        return null;
     }
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        Object[] result = new Object[currentSize];
+        for(int i = 0; i < currentSize; i++) {
+            result[i] = array[i].object;
+        }
+        return result;
     }
-
-    @Override
-    public <T> T[] toArray(T[] a) {
-        return null;
-    }
-
-
 
     @Override
     public boolean remove(Object o) {
-        return false;
+        boolean b = false;
+        for(int i = 0; i < currentSize; i++) {
+            if(array[i].object.equals(o)) {
+                remove(i);
+                b = true;
+            }
+        }
+        return b;
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
+        for(Object object : c) {
+            if (!contains(object)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        return false;
+        for(Object object : c) {
+            this.add((E) object);
+        }
+        return true;
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> c) {
-        return false;
+        for(Object object : c) {
+            add(index++, (E) object);
+        }
+        return true;
     }
 
     @Override
     public void clear() {
         array = new Entity[INITIAL_CAPACITY];
+        currentSize = 0;
     }
 
     @Override
@@ -124,8 +129,6 @@ public class MyArrayList<E> implements List<E> {
         return tmp;
     }
 
-
-
     @Override
     public E remove(int index) {
         if(index > currentSize || index < 0) {
@@ -133,31 +136,63 @@ public class MyArrayList<E> implements List<E> {
         }
         E tmp = array[index].object;
         System.arraycopy(array, index + 1, array, index, array.length - (index + 1));
+        currentSize--;
         return tmp;
     }
 
     @Override
+    public boolean removeAll(Collection<?> c) {
+        //todo
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        //todo
+        return false;
+    }
+
+    @Override
     public int indexOf(Object o) {
+        //todo
         return 0;
     }
 
     @Override
     public int lastIndexOf(Object o) {
+        //todo
         return 0;
     }
 
     @Override
+    public List<E> subList(int fromIndex, int toIndex) {
+        List<E> result = new MyArrayList<E>(currentSize);
+        //TODO
+        return null;
+    }
+
+    @Override
+    public <T> T[] toArray(T[] a) {
+        //todo
+        return null;
+    }
+
+    @Override
     public ListIterator<E> listIterator() {
+        //todo
         return null;
     }
 
     @Override
     public ListIterator<E> listIterator(int index) {
+        //todo
         return null;
     }
 
+
     @Override
-    public List<E> subList(int fromIndex, int toIndex) {
+    public Iterator<E> iterator() {
+        //todo
         return null;
     }
 

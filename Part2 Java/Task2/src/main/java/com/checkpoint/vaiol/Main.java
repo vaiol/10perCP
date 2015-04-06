@@ -9,7 +9,10 @@ public class Main {
 
         MyArrayList<Integer> name = new MyArrayList<Integer>();
         System.out.println(name.size());
-        name.add(0, 1);
+        name.add(1);
+        name.add(1);
+        name.add(1);
+        System.out.println(name.size());
         System.out.println(name.get(0));
     }
 }
