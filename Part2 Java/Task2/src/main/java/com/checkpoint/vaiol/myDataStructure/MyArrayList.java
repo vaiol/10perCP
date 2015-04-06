@@ -85,7 +85,7 @@ public class MyArrayList<E> implements List<E> {
     @Override
     public boolean containsAll(Collection<?> c) {
         for(Object object : c) {
-            if (!contains(object)) {
+            if ( ! contains(object)) {
                 return false;
             }
         }
@@ -142,33 +142,61 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        //todo
-        return false;
+        boolean b = false;
+        for(Object object : c){
+            if(remove(object)) {
+                b = true;
+            }
+        }
+        return b;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        //todo
-        return false;
+        boolean b = false;
+        for(int i = 0; i < currentSize; i++) {
+            if( ! c.contains(array[i].object)) {
+                remove(array[i].object);
+                b = true;
+                i--;
+            }
+        }
+        return b;
     }
 
     @Override
     public int indexOf(Object o) {
-        //todo
-        return 0;
+        for(int i = 0; i < currentSize; i++) {
+            if(array[i].object.equals(o)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        //todo
-        return 0;
+        for(int i = (currentSize - 1); i >= 0; i--) {
+            if (array[i].object.equals(o)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
+        if(toIndex >= currentSize || toIndex < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        if(fromIndex >= currentSize || fromIndex < 0) {
+            throw new IndexOutOfBoundsException();
+        }
         List<E> result = new MyArrayList<E>(currentSize);
-        //TODO
-        return null;
+        for(int i = fromIndex; i < toIndex; i++) {
+            result.add((E) array[i].object);
+        }
+        return result;
     }
 
     @Override
