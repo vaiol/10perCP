@@ -1,33 +1,39 @@
 package com.checkpoint.vaiol.myDataStructure;
 
+
 import java.util.*;
 
 public class MyArrayList<E> implements List<E> {
 
     private Entity<E>[] array;
     private int currentSize;
+    private long lifetime;
+    private LifeTimer lifeTimer;
+
 
     private static final int INITIAL_CAPACITY = 10;
     private static final double FACTOR = 1.5;
-    private static final long INITIAL_LIFETIME = 60000; //1 minute
 
     public MyArrayList() {
         currentSize = 0;
         array = new Entity[INITIAL_CAPACITY];
-        new LifeTimer(INITIAL_LIFETIME);
     }
 
     public MyArrayList(int initialCapacity) {
         currentSize = 0;
         array = new Entity[initialCapacity];
-        new LifeTimer(INITIAL_LIFETIME);
     }
 
-    public MyArrayList(int initialCapacity, long lifetime) {
-        currentSize = 0;
-        array = new Entity[initialCapacity];
-        new LifeTimer(lifetime);
+    public void startLifeTimer(long lifetime) {
+        this.lifetime = lifetime;
+        lifeTimer = new LifeTimer();
     }
+
+    public void stopLifeTimer() {
+        lifeTimer.stopTimer();
+        lifeTimer = null;
+    }
+
 
     @Override
     public boolean add(E e) {
@@ -210,8 +216,14 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public <T> T[] toArray(T[] a) {
-        //todo
-        return null;
+        if (a.length < currentSize) {
+            return (T[]) Arrays.copyOf(array, currentSize, a.getClass());
+        }
+        System.arraycopy(array, 0, a, 0, currentSize);
+        if (a.length > currentSize) {
+            a[currentSize] = null;
+        }
+        return a;
     }
 
     @Override
@@ -242,18 +254,23 @@ public class MyArrayList<E> implements List<E> {
         private long createTime;
     }
 
+
+
     private class LifeTimer extends Thread {
 
-        private long lifetime;
+        boolean checkLife = true;
 
-        public LifeTimer(long lifetime) {
-            this.lifetime = lifetime;
+        public LifeTimer() {
             this.start();
+        }
+
+        public void stopTimer() {
+            checkLife = false;
         }
 
         @Override
         public void run() {
-            while(true) {
+            while(checkLife) {
                 synchronized(MyArrayList.this) {
                     for(int i = 0; i < currentSize; i++) {
                         if(System.currentTimeMillis()- array[i].createTime > lifetime) {
@@ -261,6 +278,11 @@ public class MyArrayList<E> implements List<E> {
                             i--;
                         }
                     }
+                }
+                try {
+                    Thread.sleep(1000); //every 1 second
+                } catch(InterruptedException ex) {
+                    Thread.currentThread().interrupt();
                 }
             }
 

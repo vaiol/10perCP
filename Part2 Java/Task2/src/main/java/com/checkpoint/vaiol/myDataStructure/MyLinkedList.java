@@ -6,6 +6,21 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class MyLinkedList<E> implements List<E> {
+
+    private long lifetime;
+    private LifeTimer lifeTimer;
+    private int currentSize;
+
+    public void startLifeTimer(long lifetime) {
+        this.lifetime = lifetime;
+        lifeTimer = new LifeTimer();
+    }
+
+    public void stopLifeTimer() {
+        lifeTimer.stopTimer();
+        lifeTimer = null;
+    }
+
     @Override
     public int size() {
         return 0;
@@ -119,5 +134,38 @@ public class MyLinkedList<E> implements List<E> {
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
         return null;
+    }
+
+    private class LifeTimer extends Thread {
+
+        boolean checkLife = true;
+
+        public LifeTimer() {
+            this.start();
+        }
+
+        public void stopTimer() {
+            checkLife = false;
+        }
+
+        @Override
+        public void run() {
+            while(checkLife) {
+                synchronized(MyLinkedList.this) {
+                    for(int i = 0; i < currentSize; i++) {
+//                        if(System.currentTimeMillis()- array[i].createTime > lifetime) {
+//                            remove(i);
+//                            i--;
+//                        }
+                    }
+                }
+                try {
+                    Thread.sleep(1000); //every 1 second
+                } catch(InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+
+        }
     }
 }
