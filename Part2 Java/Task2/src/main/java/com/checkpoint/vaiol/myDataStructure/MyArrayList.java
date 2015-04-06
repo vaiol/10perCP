@@ -9,15 +9,24 @@ public class MyArrayList<E> implements List<E> {
 
     private static final int INITIAL_CAPACITY = 10;
     private static final double FACTOR = 1.5;
+    private static final long INITIAL_LIFETIME = 60000; //1 minute
 
     public MyArrayList() {
         currentSize = 0;
         array = new Entity[INITIAL_CAPACITY];
+        new LifeTimer(INITIAL_LIFETIME);
     }
 
     public MyArrayList(int initialCapacity) {
         currentSize = 0;
         array = new Entity[initialCapacity];
+        new LifeTimer(INITIAL_LIFETIME);
+    }
+
+    public MyArrayList(int initialCapacity, long lifetime) {
+        currentSize = 0;
+        array = new Entity[initialCapacity];
+        new LifeTimer(lifetime);
     }
 
     @Override
@@ -231,5 +240,30 @@ public class MyArrayList<E> implements List<E> {
         }
         private E object;
         private long createTime;
+    }
+
+    private class LifeTimer extends Thread {
+
+        private long lifetime;
+
+        public LifeTimer(long lifetime) {
+            this.lifetime = lifetime;
+            this.start();
+        }
+
+        @Override
+        public void run() {
+            while(true) {
+                synchronized(MyArrayList.this) {
+                    for(int i = 0; i < currentSize; i++) {
+                        if(System.currentTimeMillis()- array[i].createTime > lifetime) {
+                            remove(i);
+                            i--;
+                        }
+                    }
+                }
+            }
+
+        }
     }
 }
