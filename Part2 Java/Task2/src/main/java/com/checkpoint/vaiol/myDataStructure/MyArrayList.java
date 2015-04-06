@@ -304,4 +304,18 @@ public class MyArrayList<E> implements List<E> {
 
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MyArrayList that = (MyArrayList) o;
+
+        if (currentSize != that.currentSize) return false;
+        if (!Arrays.equals(array, that.array)) return false;
+
+        return true;
+    }
+
 }

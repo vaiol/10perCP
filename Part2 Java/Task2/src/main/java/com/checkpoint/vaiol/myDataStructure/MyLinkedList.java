@@ -1,7 +1,5 @@
 package com.checkpoint.vaiol.myDataStructure;
 
-import com.sun.istack.internal.NotNull;
-
 import java.util.*;
 
 public class MyLinkedList<E> implements List<E> {
@@ -207,6 +205,7 @@ public class MyLinkedList<E> implements List<E> {
             if(i == index) {
                 current.prev.next = current.next;
                 current.next.prev = current.prev;
+                currentSize--;
                 return current.value;
             }
             i++;
@@ -232,12 +231,12 @@ public class MyLinkedList<E> implements List<E> {
     @Override
     public int lastIndexOf(Object o) {
         Node<E> current = mainNode.prev;
-        int i = 0;
+        int i = currentSize-1;
         while (current != mainNode) {
             if(current.value.equals(o)) {
                 return i;
             }
-            i++;
+            i--;
             current = current.prev;
         }
         return -1;
@@ -281,18 +280,21 @@ public class MyLinkedList<E> implements List<E> {
     }
 
     @Override
-    public ListIterator<E> listIterator() {
-        return null;
-    }
-
-    @Override
-    public ListIterator<E> listIterator(int index) {
-        return null;
-    }
-
-    @Override
     public Iterator<E> iterator() {
-        return null;
+        return new InnerIterator();
+    }
+
+    @Override
+    public ListIterator<E> listIterator() {
+        return new InnerIterator();
+    }
+
+    @Override
+    public synchronized ListIterator<E> listIterator(int index) {
+        if(index>=this.size() || index<0) throw new IndexOutOfBoundsException();
+        else {
+            return new InnerIterator(index);
+        }
     }
 
     @Override
@@ -312,6 +314,24 @@ public class MyLinkedList<E> implements List<E> {
         return a;
     }
 
+    @Override
+    protected void finalize() throws Throwable {
+        lifeTimer.stopTimer();
+    }
+
+    @Override
+    public String toString() {
+        Node<E> current = mainNode.next;
+
+        String str = currentSize + ": ";
+        while (current.next != mainNode) {
+            str += current.value + " ";
+            current = current.next;
+        }
+        str += (current.value + "");
+        return str;
+    }
+
 
     private class Node<E> {
         public Node(E value) {
@@ -322,6 +342,129 @@ public class MyLinkedList<E> implements List<E> {
         private Node<E> prev;
         private E value;
         private long creationTime;
+    }
+
+    private class InnerIterator implements ListIterator<E> {
+
+        private Node<E> current;
+        private int index;
+        private boolean nextInvoked = true;
+        private Node<E> lastReturned = null;
+
+        public InnerIterator() {
+            current = mainNode.next;
+        }
+
+        public InnerIterator(Node<E> node) {
+            if(node == mainNode.prev) nextInvoked = false;
+            current = node;
+        }
+
+        public InnerIterator(int index) {
+            if(index == size()-1)
+                nextInvoked = false;
+            else
+                nextInvoked = true;
+            current = mainNode.next;
+
+            int b = index;
+            while(b-->0)
+                current =current.next;
+        }
+
+        @Override
+        public void add(E e) {
+            Node<E> elemToAdd = new Node<E>(e);
+            if(mainNode.next==null) {
+                mainNode.next=elemToAdd;
+                mainNode.prev = mainNode.next;
+                return;
+            }
+
+            if(nextInvoked){
+                elemToAdd.next = (current);
+                elemToAdd.prev = (current.prev);
+                if(current.prev!=null)
+                    current.prev.next = (elemToAdd);
+                else
+                    mainNode.next = elemToAdd;
+                current.prev = (elemToAdd);
+
+            } else {
+
+                elemToAdd.prev = (current);
+                elemToAdd.next = (current.next);
+                if(current.next!=null)
+                    current.next.prev = (elemToAdd);
+                else
+                    mainNode.prev = elemToAdd;
+                current.next = (elemToAdd);
+
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            if(current == mainNode.prev)
+                return false;
+            else return true;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            if(current == mainNode.next)
+                return false;
+            else return true;
+        }
+
+        @Override
+        public E next() {
+            E value = current.value;
+            index++;
+            lastReturned = current;
+            current = current.next;
+            nextInvoked=true;
+            return value;
+        }
+
+        @Override
+        public int nextIndex() {
+            return index+1;
+        }
+
+        @Override
+        public E previous() {
+            E value = current.value;
+            index--;
+            lastReturned = current;
+            current = current.prev;
+            nextInvoked=false;
+            return value;
+        }
+
+        @Override
+        public int previousIndex() {
+            return index-1;
+        }
+
+        @Override
+        public void remove() {
+            if(lastReturned.prev!=null)
+                lastReturned.prev.next = (lastReturned.next);
+            else
+                mainNode.next = lastReturned.next;
+            if(lastReturned.next!=null)
+                lastReturned.next.prev = (lastReturned.prev);
+            else
+                mainNode.prev = lastReturned.prev;
+
+        }
+
+        @Override
+        public void set(E e) {
+            lastReturned.value = (e);
+        }
+
     }
 
     private class LifeTimer extends Thread {
