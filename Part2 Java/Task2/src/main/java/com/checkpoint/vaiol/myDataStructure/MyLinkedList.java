@@ -8,7 +8,7 @@ public class MyLinkedList<E> implements List<E> {
     private LifeTimer lifeTimer;
     private int currentSize;
 
-    private Node<E> mainNode;
+    private Node<E> head;
 
 
     public MyLinkedList() {
@@ -39,19 +39,19 @@ public class MyLinkedList<E> implements List<E> {
     public boolean add(E e) {
         Node<E> newNode = new Node<E>(e);
 
-        newNode.next = mainNode;
-        newNode.prev = mainNode.prev;
-        mainNode.prev.next = newNode;
-        mainNode.prev = newNode;
+        newNode.next = head;
+        newNode.prev = head.prev;
+        head.prev.next = newNode;
+        head.prev = newNode;
         currentSize++;
         return true;
     }
 
     @Override
     public boolean remove(Object o) {
-        Node<E> current = mainNode.next;
+        Node<E> current = head.next;
         boolean b = false;
-        while (current != mainNode) {
+        while (current != head) {
             if(current.value.equals(o)) {
                 current.prev.next = current.next;
                 current.next.prev = current.prev;
@@ -104,9 +104,9 @@ public class MyLinkedList<E> implements List<E> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        Node<E> current = mainNode.next;
+        Node<E> current = head.next;
         boolean b = false;
-        while (current != mainNode) {
+        while (current != head) {
             if( ! c.contains(current.value)) {
                 remove(current.value);
                 b = true;
@@ -118,9 +118,9 @@ public class MyLinkedList<E> implements List<E> {
 
     @Override
     public void clear() {
-        mainNode = new Node<E>(null);
-        mainNode.next = mainNode;
-        mainNode.prev = mainNode;
+        head = new Node<E>(null);
+        head.next = head;
+        head.prev = head;
         currentSize = 0;
     }
 
@@ -129,9 +129,9 @@ public class MyLinkedList<E> implements List<E> {
         if(index > currentSize || index < 0) {
             throw new IndexOutOfBoundsException();
         }
-        Node<E> current = mainNode.next;
+        Node<E> current = head.next;
         int i = 0;
-        while (current != mainNode || i >= currentSize) {
+        while (current != head || i >= currentSize) {
             if(i == index) {
                 return current.value;
             }
@@ -143,8 +143,8 @@ public class MyLinkedList<E> implements List<E> {
 
     @Override
     public boolean contains(Object o) {
-        Node<E> current = mainNode.next;
-        while (current != mainNode) {
+        Node<E> current = head.next;
+        while (current != head) {
             if(current.value.equals(o)) {
                 return true;
             }
@@ -158,9 +158,9 @@ public class MyLinkedList<E> implements List<E> {
         if(index > currentSize || index < 0) {
             throw new IndexOutOfBoundsException();
         }
-        Node<E> current = mainNode.next;
+        Node<E> current = head.next;
         int i = 0;
-        while (current != mainNode || i >= currentSize) {
+        while (current != head || i >= currentSize) {
             if(i == index) {
                 E result = current.value;
                 current.value = element;
@@ -177,9 +177,9 @@ public class MyLinkedList<E> implements List<E> {
         if(index > currentSize || index < 0) {
             throw new IndexOutOfBoundsException();
         }
-        Node<E> current = mainNode.next;
+        Node<E> current = head.next;
         int i = 0;
-        while (current != mainNode || i >= currentSize) {
+        while (current != head || i >= currentSize) {
             if(i == index) {
                 Node<E> newNode = new Node<E>(element);
                 newNode.next = current;
@@ -199,9 +199,9 @@ public class MyLinkedList<E> implements List<E> {
         if(index > currentSize || index < 0) {
             throw new IndexOutOfBoundsException();
         }
-        Node<E> current = mainNode.next;
+        Node<E> current = head.next;
         int i = 0;
-        while (current != mainNode || i >= currentSize) {
+        while (current != head || i >= currentSize) {
             if(i == index) {
                 current.prev.next = current.next;
                 current.next.prev = current.prev;
@@ -216,9 +216,9 @@ public class MyLinkedList<E> implements List<E> {
 
     @Override
     public int indexOf(Object o) {
-        Node<E> current = mainNode.next;
+        Node<E> current = head.next;
         int i = 0;
-        while (current != mainNode) {
+        while (current != head) {
             if(current.value.equals(o)) {
                 return i;
             }
@@ -230,9 +230,9 @@ public class MyLinkedList<E> implements List<E> {
 
     @Override
     public int lastIndexOf(Object o) {
-        Node<E> current = mainNode.prev;
+        Node<E> current = head.prev;
         int i = currentSize-1;
-        while (current != mainNode) {
+        while (current != head) {
             if(current.value.equals(o)) {
                 return i;
             }
@@ -254,9 +254,9 @@ public class MyLinkedList<E> implements List<E> {
             throw new IndexOutOfBoundsException();
         }
         List<E> result = new MyLinkedList<E>();
-        Node<E> current = mainNode.next;
+        Node<E> current = head.next;
         int i = 0;
-        while (current != mainNode) {
+        while (current != head) {
             if(i <= fromIndex && i < toIndex) {
                 result.add(current.value);
             }
@@ -269,9 +269,9 @@ public class MyLinkedList<E> implements List<E> {
     @Override
     public Object[] toArray() {
         Object[] newArray = new Object[currentSize];
-        Node<E> current = mainNode.next;
+        Node<E> current = head.next;
         int i = 0;
-        while (current != mainNode) {
+        while (current != head) {
             newArray[i] = current.value;
             i++;
             current = current.next;
@@ -281,19 +281,20 @@ public class MyLinkedList<E> implements List<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new InnerIterator();
+        return new MyIterator();
     }
 
     @Override
     public ListIterator<E> listIterator() {
-        return new InnerIterator();
+        return new MyIterator();
     }
 
     @Override
     public synchronized ListIterator<E> listIterator(int index) {
-        if(index>=this.size() || index<0) throw new IndexOutOfBoundsException();
-        else {
-            return new InnerIterator(index);
+        if(index >= this.size() || index < 0) {
+            throw new IndexOutOfBoundsException();
+        } else {
+            return new MyIterator(index);
         }
     }
 
@@ -305,7 +306,7 @@ public class MyLinkedList<E> implements List<E> {
                     a.getClass().getComponentType(), currentSize);
         int i = 0;
         Object[] result = a;
-        for (Node<E> current = mainNode.next; current != mainNode; current = current.next)
+        for (Node<E> current = head.next; current != head; current = current.next)
             result[i++] = current.value;
 
         if (a.length > currentSize)
@@ -321,10 +322,10 @@ public class MyLinkedList<E> implements List<E> {
 
     @Override
     public String toString() {
-        Node<E> current = mainNode.next;
+        Node<E> current = head.next;
 
         String str = currentSize + ": ";
-        while (current.next != mainNode) {
+        while (current.next != head) {
             str += current.value + " ";
             current = current.next;
         }
@@ -344,77 +345,73 @@ public class MyLinkedList<E> implements List<E> {
         private long creationTime;
     }
 
-    private class InnerIterator implements ListIterator<E> {
+    private class MyIterator implements ListIterator<E> {
 
         private Node<E> current;
         private int index;
         private boolean nextInvoked = true;
         private Node<E> lastReturned = null;
 
-        public InnerIterator() {
-            current = mainNode.next;
+        public MyIterator() {
+            current = head.next;
         }
 
-        public InnerIterator(Node<E> node) {
-            if(node == mainNode.prev) nextInvoked = false;
-            current = node;
-        }
 
-        public InnerIterator(int index) {
-            if(index == size()-1)
+        public MyIterator(int index) {
+            if(index == size()-1) {
                 nextInvoked = false;
-            else
+            } else {
                 nextInvoked = true;
-            current = mainNode.next;
+            }
+            current = head.next;
+            this.index = index;
 
-            int b = index;
-            while(b-->0)
-                current =current.next;
+            int b = 0;
+            while(b < index) {
+                current = current.next;
+                b++;
+            }
         }
 
         @Override
         public void add(E e) {
             Node<E> elemToAdd = new Node<E>(e);
-            if(mainNode.next==null) {
-                mainNode.next=elemToAdd;
-                mainNode.prev = mainNode.next;
+            if(head.next==null) {
+                head.next=elemToAdd;
+                head.prev = head.next;
                 return;
             }
 
-            if(nextInvoked){
+            if(nextInvoked) {
                 elemToAdd.next = (current);
                 elemToAdd.prev = (current.prev);
-                if(current.prev!=null)
+                if(current.prev!=null) {
                     current.prev.next = (elemToAdd);
-                else
-                    mainNode.next = elemToAdd;
+                } else {
+                    head.next = elemToAdd;
+                }
                 current.prev = (elemToAdd);
 
             } else {
-
                 elemToAdd.prev = (current);
                 elemToAdd.next = (current.next);
-                if(current.next!=null)
+                if(current.next!=null) {
                     current.next.prev = (elemToAdd);
-                else
-                    mainNode.prev = elemToAdd;
+                } else {
+                    head.prev = elemToAdd;
+                }
                 current.next = (elemToAdd);
-
             }
         }
 
         @Override
         public boolean hasNext() {
-            if(current == mainNode.prev)
-                return false;
-            else return true;
+            return ! (current == head.prev);
         }
 
         @Override
         public boolean hasPrevious() {
-            if(current == mainNode.next)
-                return false;
-            else return true;
+            return ! (current == head.next);
         }
 
         @Override
@@ -423,13 +420,13 @@ public class MyLinkedList<E> implements List<E> {
             index++;
             lastReturned = current;
             current = current.next;
-            nextInvoked=true;
+            nextInvoked = true;
             return value;
         }
 
         @Override
         public int nextIndex() {
-            return index+1;
+            return index + 1;
         }
 
         @Override
@@ -438,25 +435,27 @@ public class MyLinkedList<E> implements List<E> {
             index--;
             lastReturned = current;
             current = current.prev;
-            nextInvoked=false;
+            nextInvoked = false;
             return value;
         }
 
         @Override
         public int previousIndex() {
-            return index-1;
+            return index - 1;
         }
 
         @Override
         public void remove() {
-            if(lastReturned.prev!=null)
+            if(lastReturned.prev!=null) {
                 lastReturned.prev.next = (lastReturned.next);
-            else
-                mainNode.next = lastReturned.next;
-            if(lastReturned.next!=null)
+            } else {
+                head.next = lastReturned.next;
+            }
+            if(lastReturned.next!=null) {
                 lastReturned.next.prev = (lastReturned.prev);
-            else
-                mainNode.prev = lastReturned.prev;
+            } else {
+                head.prev = lastReturned.prev;
+            }
 
         }
 
@@ -483,9 +482,9 @@ public class MyLinkedList<E> implements List<E> {
         public void run() {
             while(checkLife) {
                 synchronized(MyLinkedList.this) {
-                    Node<E> current = mainNode.next;
+                    Node<E> current = head.next;
                     int i = 0;
-                    while (current != mainNode) {
+                    while (current != head) {
                         if(System.currentTimeMillis() - current.creationTime > lifetime) {
                             remove(i);
                         }

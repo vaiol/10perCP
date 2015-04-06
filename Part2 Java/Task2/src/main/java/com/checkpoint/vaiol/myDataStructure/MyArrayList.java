@@ -1,8 +1,5 @@
 package com.checkpoint.vaiol.myDataStructure;
 
-
-import com.sun.istack.internal.NotNull;
-
 import java.util.*;
 
 public class MyArrayList<E> implements List<E> {
@@ -243,23 +240,25 @@ public class MyArrayList<E> implements List<E> {
     }
 
     @Override
-    public ListIterator<E> listIterator() {
-        //todo
-        return null;
-    }
-
-    @Override
-    public ListIterator<E> listIterator(int index) {
-        //todo
-        return null;
-    }
-
-
-    @Override
     public Iterator<E> iterator() {
-        //todo
-        return null;
+        return new MyIterator();
     }
+
+    @Override
+    public ListIterator<E> listIterator() {
+        return new MyIterator();
+    }
+
+    @Override
+    public synchronized ListIterator<E> listIterator(int index) {
+        if(index >= this.size() || index < 0) {
+            throw new IndexOutOfBoundsException();
+        } else {
+            return new MyIterator(index);
+        }
+    }
+
+
 
     private class Entity<E> {
         public Entity(E object, long creationTime) {
@@ -268,6 +267,86 @@ public class MyArrayList<E> implements List<E> {
         }
         private E object;
         private long creationTime;
+    }
+
+
+
+    private class MyIterator implements ListIterator<E> {
+
+        private Entity<E> current;
+        private int index;
+        private boolean nextInvoked = true;
+        private Entity<E> lastReturned = null;
+
+        public MyIterator() {
+            index = 0;
+            current = array[index];
+        }
+
+
+        public MyIterator(int index) {
+            if(index == size()-1) {
+                nextInvoked = false;
+            } else {
+                nextInvoked = true;
+            }
+            current = array[index];
+            this.index = index;
+        }
+
+        @Override
+        public void add(E e) {
+        }
+
+        @Override
+        public boolean hasNext() {
+            return ! (current == array[array.length - 1]);
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return ! (current == array[0]);
+        }
+
+        @Override
+        public E next() {
+            E value = current.object;
+            index++;
+            lastReturned = current;
+            current = array[index];
+            nextInvoked = true;
+            return value;
+        }
+
+        @Override
+        public int nextIndex() {
+            return index + 1;
+        }
+
+        @Override
+        public E previous() {
+            E value = current.object;
+            index--;
+            lastReturned = current;
+            current = array[index];
+            nextInvoked = false;
+            return value;
+        }
+
+        @Override
+        public int previousIndex() {
+            return index - 1;
+        }
+
+        @Override
+        public void remove() {
+        }
+
+        @Override
+        public void set(E e) {
+            lastReturned.object = (e);
+        }
+
     }
 
 

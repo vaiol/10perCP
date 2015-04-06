@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-
 public class ArrayListTest {
 
 	private MyArrayList<Integer> list;
@@ -24,7 +23,7 @@ public class ArrayListTest {
 
 		list = new MyArrayList<Integer>();
 		for(int i = 0; i<10; i++) {
-			list.add(i);
+			list.add(new Integer(i));
 		}
 		
 		containsAllTrue = Arrays.asList(new Integer(0),new Integer(4),new Integer(9));
@@ -32,24 +31,24 @@ public class ArrayListTest {
 		checkAddAll = Arrays.asList(new Integer(13),new Integer(12),new Integer(11));
 	}
 	
-	@Test
-	public void temporalRemovement() throws InterruptedException {
-
-		MyArrayList<Integer> ls = new MyArrayList<Integer>();
-
-		for(int i = 0; i<15; i++) {
-			ls.add(i);
-			Thread.sleep(1000);
-		}
-
-		MyArrayList<Integer> toCompare = new MyArrayList<Integer>();
-
-		for(int i=6; i<15; i++)
-			toCompare.add(new Integer(i));
-
-		Thread.sleep(200);
-		assertEquals(toCompare, ls);
-	}
+//	@Test
+//	public void temporalRemovement() throws InterruptedException {
+//
+//		MyArrayList<Integer> ls = new MyArrayList<Integer>();
+//
+//		for(int i = 0; i<15; i++) {
+//			ls.add(i);
+//			Thread.sleep(1000);
+//		}
+//
+//		MyArrayList<Integer> toCompare = new MyArrayList<Integer>();
+//
+//		for(int i=6; i<15; i++)
+//			toCompare.add(new Integer(i));
+//
+//		Thread.sleep(200);
+//		assertEquals(toCompare, ls);
+//	}
 	
 	@Test
 	public void testAdd() {
@@ -164,8 +163,11 @@ public class ArrayListTest {
 	@Test 
 	public void testRetainAll(){
 		list.retainAll(containsAllTrue);
-		for(int i=0; i<containsAllTrue.size();i++)
-			assertEquals(containsAllTrue.get(i),list.get(i));
+		int i = 0;
+		for(Integer o : containsAllTrue) {
+			assertEquals(o, list.get(i));
+			i++;
+		}
 	}
 	
 	@Test

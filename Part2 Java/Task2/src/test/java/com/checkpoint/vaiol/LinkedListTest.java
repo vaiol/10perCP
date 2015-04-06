@@ -22,14 +22,14 @@ public class LinkedListTest {
 	@Before
 	public void init() {
 
-		list = new MyLinkedList<Integer>();
+		this.list = new MyLinkedList<Integer>();
 		for(int i = 0; i<10; i++) {
-			list.add(new Integer(i));
+			this.list.add(new Integer(i));
 		}
 		
-		containsAllTrue = Arrays.asList(new Integer(0), new Integer(4), new Integer(9));
-		containsAllFalse = Arrays.asList(new Integer(-1),new Integer(2),new Integer(5));
-		checkAddAll = Arrays.asList(new Integer(13),new Integer(12),new Integer(11));
+		this.containsAllTrue = Arrays.asList(new Integer(0), new Integer(4), new Integer(9));
+		this.containsAllFalse = Arrays.asList(new Integer(-1),new Integer(2),new Integer(5));
+		this.checkAddAll = Arrays.asList(new Integer(13),new Integer(12),new Integer(11));
 	}
 	
 //	@Test
@@ -52,103 +52,104 @@ public class LinkedListTest {
 	
 	@Test
 	public void testAdd() {
-		Assert.assertEquals(list.size(), 10);
-		Assert.assertEquals(new Integer(0), list.get(0));
-		Assert.assertEquals(new Integer(4), list.get(4));
-		Assert.assertEquals(new Integer(9), list.get(9));
+		Assert.assertEquals(this.list.size(), 10);
+		Assert.assertEquals(new Integer(0), this.list.get(0));
+		Assert.assertEquals(new Integer(4), this.list.get(4));
+		Assert.assertEquals(new Integer(9), this.list.get(9));
 	}
 	
 	
 	@Test 
 	public void testIndexualAdd(){
-		list.add(0,new Integer(11));
-		list.add(3,new Integer(12));
-		list.add(5,new Integer(13));
-		list.add(list.size(),new Integer(14));
+		this.list.add(0,new Integer(11));
+		this.list.add(3,new Integer(12));
+		this.list.add(5,new Integer(13));
+		this.list.add(this.list.size()-1,new Integer(14));
 
-		assertEquals(14, list.size());
-		assertEquals(new Integer(11),list.get(0));
-		assertEquals(new Integer(12),list.get(3));
-		assertEquals(new Integer(13),list.get(5));
-		assertEquals(new Integer(14),list.get(list.size()-1));
+		Assert.assertEquals(14,this.list.size());
+		assertEquals(new Integer(11),this.list.get(0));
+		assertEquals(new Integer(12),this.list.get(3));
+		assertEquals(new Integer(13),this.list.get(5));
+		assertEquals(new Integer(14),this.list.get(this.list.size()-1));
 	}
 	
 	@Test
 	public void testGet() {
 
-		Assert.assertEquals(new Integer(0),list.get(0));
-		Assert.assertEquals(new Integer(4),list.get(4));
-		Assert.assertEquals(new Integer(9),list.get(9));
+		Assert.assertEquals(new Integer(0),this.list.get(0));
+		Assert.assertEquals(new Integer(4),this.list.get(4));
+		Assert.assertEquals(new Integer(9),this.list.get(9));
 	}
 	
 	@Test
 	public void testSet(){
-		list.set(0, new Integer(15));
-		list.set(3, new Integer(16));
-		list.set(list.size()-1, new Integer(17));
-		Assert.assertEquals(new Integer(16),list.get(3));
-		Assert.assertEquals(new Integer(15),list.get(0));
-		Assert.assertEquals(new Integer(17),list.get(list.size()-1));
+		this.list.set(0, new Integer(15));
+		this.list.set(3, new Integer(16));
+		this.list.set(this.list.size()-1, new Integer(17));
+		Assert.assertEquals(new Integer(16),this.list.get(3));
+		Assert.assertEquals(new Integer(15),this.list.get(0));
+		Assert.assertEquals(new Integer(17),this.list.get(this.list.size()-1));
 
 	}
 	
 	@Test
 	public void testClear(){
-		list.clear();
-		Assert.assertEquals(0,list.size());
+		this.list.clear();
+		Assert.assertEquals(0,this.list.size());
 	}
 	
 	@Test
 	public void testContains() {
-		Assert.assertEquals(true,list.containsAll(containsAllTrue));
-		Assert.assertEquals(false,list.containsAll(containsAllFalse));
+		Assert.assertEquals(true,this.list.containsAll(this.containsAllTrue));
+		Assert.assertEquals(false,this.list.containsAll(this.containsAllFalse));		
 	}
 	
 	@Test
 	public void testContainsSingle() {
-		Assert.assertEquals(true,list.contains(new Integer(4)));
-		Assert.assertEquals(false,list.contains(new Integer(11)));
+		Assert.assertEquals(true,this.list.contains(new Integer(4)));
+		Assert.assertEquals(false,this.list.contains(new Integer(11)));		
 	}
 	
 	@Test
 	public void testIndexOf() {
-		Assert.assertEquals(4,list.indexOf(new Integer(4)));
-		Assert.assertEquals(0,list.indexOf(new Integer(0)));
-		Assert.assertEquals(9,list.indexOf(new Integer(9)));
-		Assert.assertEquals(-1,list.indexOf(new Integer(11)));
+		Assert.assertEquals(4,this.list.indexOf(new Integer(4)));
+		Assert.assertEquals(0,this.list.indexOf(new Integer(0)));
+		Assert.assertEquals(9,this.list.indexOf(new Integer(9)));
+		Assert.assertEquals(-1,this.list.indexOf(new Integer(11)));
 	}
 	
 	@Test
 	public void testAddAll() {
-		list.addAll(1,checkAddAll);
+		this.list.addAll(1,checkAddAll);
 
 		for(int i=1, j=0; i<4; i++, j++)
-			assertEquals(checkAddAll.get(j),list.get(i));
+			assertEquals(this.checkAddAll.get(j),this.list.get(i));
 	}
 	
 	@Test
 	public void testLastIndex() {
-		list.add(6,new Integer(3));
-		Assert.assertEquals(6, list.lastIndexOf(new Integer(3)));
-		Assert.assertEquals(-1, list.lastIndexOf(new Integer(11)));
-		Assert.assertEquals(1, list.lastIndexOf(new Integer(1)));
+		this.list.add(6,new Integer(3));
+		Assert.assertEquals(6, this.list.lastIndexOf(new Integer(3)));
+		Assert.assertEquals(-1, this.list.lastIndexOf(new Integer(11)));
+		Assert.assertEquals(1, this.list.lastIndexOf(new Integer(1)));
 	}
 	
 	@Test 
 	public void testRemove() {
-		list.remove(new Integer(0));
-		list.remove(new Integer(4));
-		list.remove(new Integer(list.size()-1));
+		this.list.remove(new Integer(0));
+		this.list.remove(new Integer(4));
+		this.list.remove(new Integer(this.list.size()-1));
 	}
 	
 	@Test 
 	public void testRemoveIndex() {
-		list.remove(0);
-		list.remove(4);
-		list.remove(list.size()-1);
+		this.list.remove(0);
+		this.list.remove(4);
+		this.list.remove(this.list.size()-1);
+		
 		List<Integer> l = Arrays.asList(new Integer(0),new Integer(5),new Integer(9));
 		
-		for(Integer i : list) {
+		for(Integer i : this.list) {
 			assertEquals(false,l.contains(i));
 		}
 	}
@@ -156,16 +157,16 @@ public class LinkedListTest {
 	
 	@Test 
 	public void testRemoveAll(){
-		list.removeAll(containsAllTrue);
-		for(Integer i : list)
-			assertEquals(false,containsAllTrue.contains(i));
+		this.list.removeAll(this.containsAllTrue);
+		for(Integer i : this.list)
+			assertEquals(false,this.containsAllTrue.contains(i));
 	}
 	
 	@Test 
 	public void testRetainAll(){
-		list.retainAll(containsAllTrue);
-		for(int i=0; i<containsAllTrue.size();i++)
-			assertEquals(containsAllTrue.get(i),list.get(i));
+		this.list.retainAll(this.containsAllTrue);
+		for(int i=0; i<this.containsAllTrue.size();i++)
+			assertEquals(this.containsAllTrue.get(i),this.list.get(i));
 	}
 	
 	@Test
@@ -180,17 +181,4 @@ public class LinkedListTest {
 			Assert.assertEquals(i, o[i]);
 		}
 	}
-	
-//	@Test
-//	public void testEquals(){
-//		MyLinkedList<Integer> arr = new MyLinkedList<Integer>();
-//
-//		for(int i=0; i<10; i++){
-//			arr.add(i);
-//		}
-//
-//		assertEquals(arr, list);
-//		list.remove(new Integer(1));
-//		assertNotEquals(arr, list);
-//	}
 }
