@@ -1,6 +1,8 @@
 package com.checkpoint.vaiol.myDataStructure;
 
 
+import com.sun.istack.internal.NotNull;
+
 import java.util.*;
 
 public class MyArrayList<E> implements List<E> {
@@ -14,11 +16,14 @@ public class MyArrayList<E> implements List<E> {
     private static final int INITIAL_CAPACITY = 10;
     private static final double FACTOR = 1.5;
 
+
+    @SuppressWarnings("unchecked")
     public MyArrayList() {
         currentSize = 0;
         array = new Entity[INITIAL_CAPACITY];
     }
 
+    @SuppressWarnings("unchecked")
     public MyArrayList(int initialCapacity) {
         currentSize = 0;
         array = new Entity[initialCapacity];
@@ -42,6 +47,7 @@ public class MyArrayList<E> implements List<E> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void add(int index, E element) {
         if(index > currentSize || index < 0) {
             throw new IndexOutOfBoundsException();
@@ -108,14 +114,16 @@ public class MyArrayList<E> implements List<E> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean addAll(Collection<? extends E> c) {
         for(Object object : c) {
-            this.add((E) object);
+            add((E) object);
         }
         return true;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean addAll(int index, Collection<? extends E> c) {
         for(Object object : c) {
             add(index++, (E) object);
@@ -124,6 +132,7 @@ public class MyArrayList<E> implements List<E> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void clear() {
         array = new Entity[INITIAL_CAPACITY];
         currentSize = 0;
@@ -215,6 +224,7 @@ public class MyArrayList<E> implements List<E> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] a) {
         if (a.length < currentSize) {
             return (T[]) Arrays.copyOf(array, currentSize, a.getClass());
@@ -246,12 +256,12 @@ public class MyArrayList<E> implements List<E> {
     }
 
     private class Entity<E> {
-        public Entity(E object, long createTime) {
+        public Entity(E object, long creationTime) {
             this.object = object;
-            this.createTime = createTime;
+            this.creationTime = creationTime;
         }
         private E object;
-        private long createTime;
+        private long creationTime;
     }
 
 
@@ -273,7 +283,7 @@ public class MyArrayList<E> implements List<E> {
             while(checkLife) {
                 synchronized(MyArrayList.this) {
                     for(int i = 0; i < currentSize; i++) {
-                        if(System.currentTimeMillis()- array[i].createTime > lifetime) {
+                        if(System.currentTimeMillis()- array[i].creationTime > lifetime) {
                             remove(i);
                             i--;
                         }

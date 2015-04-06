@@ -1,9 +1,6 @@
 package com.checkpoint.vaiol.myDataStructure;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class MyLinkedList<E> implements List<E> {
 
@@ -11,9 +8,20 @@ public class MyLinkedList<E> implements List<E> {
     private LifeTimer lifeTimer;
     private int currentSize;
 
+    private Node mainNode;
+
+
+    public MyLinkedList() {
+        mainNode = new Node<E>(null);
+        mainNode.next = mainNode;
+        mainNode.prev = mainNode;
+        currentSize = 0;
+    }
+
     public void startLifeTimer(long lifetime) {
         this.lifetime = lifetime;
         lifeTimer = new LifeTimer();
+        LinkedList
     }
 
     public void stopLifeTimer() {
@@ -23,12 +31,12 @@ public class MyLinkedList<E> implements List<E> {
 
     @Override
     public int size() {
-        return 0;
+        return currentSize;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return currentSize == 0;
     }
 
     @Override
@@ -53,32 +61,66 @@ public class MyLinkedList<E> implements List<E> {
 
     @Override
     public boolean add(E e) {
-        return false;
+        Node newNode = new Node<E>(e);
+        mainNode.prev.next = newNode;
+        mainNode.prev = newNode;
+        currentSize++;
+        return true;
     }
 
     @Override
     public boolean remove(Object o) {
+        Node current = mainNode.next;
+        boolean b = false;
+        while (current != mainNode) {
+            if(current.value.equals(o)) {
+                current.prev.next = current.next;
+                current.next.prev = current.prev;
+                b = true;
+            }
+            current = current.next;
+        }
         return false;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean containsAll(Collection<?> c) {
-        return false;
+        for (Object object : c) {
+            if(! contains((E) object)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean addAll(Collection<? extends E> c) {
-        return false;
+        for (Object object : c) {
+            add((E) object);
+        }
+        return true;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean addAll(int index, Collection<? extends E> c) {
-        return false;
+        for(Object object : c) {
+            add(index++, (E) object);
+        }
+        return true;
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        boolean b = false;
+        for(Object object : c){
+            if(remove(object)) {
+                b = true;
+            }
+        }
+        return b;
     }
 
     @Override
@@ -136,6 +178,17 @@ public class MyLinkedList<E> implements List<E> {
         return null;
     }
 
+    private class Node<E> {
+        public Node(E value) {
+            this.value = value;
+            creationTime = System.currentTimeMillis();
+        }
+        private Node next;
+        private Node prev;
+        private E value;
+        private long creationTime;
+    }
+
     private class LifeTimer extends Thread {
 
         boolean checkLife = true;
@@ -152,12 +205,12 @@ public class MyLinkedList<E> implements List<E> {
         public void run() {
             while(checkLife) {
                 synchronized(MyLinkedList.this) {
-                    for(int i = 0; i < currentSize; i++) {
+//                    for(int i = 0; i < currentSize; i++) {
 //                        if(System.currentTimeMillis()- array[i].createTime > lifetime) {
 //                            remove(i);
 //                            i--;
 //                        }
-                    }
+//                    }
                 }
                 try {
                     Thread.sleep(1000); //every 1 second
