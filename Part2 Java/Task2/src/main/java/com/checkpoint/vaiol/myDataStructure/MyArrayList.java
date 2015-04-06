@@ -219,9 +219,12 @@ public class MyArrayList<E> implements List<E> {
         if(fromIndex >= currentSize || fromIndex < 0) {
             throw new IndexOutOfBoundsException();
         }
+        if(fromIndex >= toIndex) {
+            throw new IndexOutOfBoundsException();
+        }
         List<E> result = new MyArrayList<E>(currentSize);
         for(int i = fromIndex; i < toIndex; i++) {
-            result.add((E) array[i].object);
+            result.add(array[i].object);
         }
         return result;
     }
@@ -286,7 +289,7 @@ public class MyArrayList<E> implements List<E> {
             while(checkLife) {
                 synchronized(MyArrayList.this) {
                     for(int i = 0; i < currentSize; i++) {
-                        if(System.currentTimeMillis()- array[i].creationTime > lifetime) {
+                        if(System.currentTimeMillis() - array[i].creationTime > lifetime) {
                             remove(i);
                             i--;
                         }

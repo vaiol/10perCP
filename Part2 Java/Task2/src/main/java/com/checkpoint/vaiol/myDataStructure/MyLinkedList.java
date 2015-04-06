@@ -1,5 +1,7 @@
 package com.checkpoint.vaiol.myDataStructure;
 
+import com.sun.istack.internal.NotNull;
+
 import java.util.*;
 
 public class MyLinkedList<E> implements List<E> {
@@ -38,6 +40,9 @@ public class MyLinkedList<E> implements List<E> {
     @Override
     public boolean add(E e) {
         Node<E> newNode = new Node<E>(e);
+
+        newNode.next = mainNode;
+        newNode.prev = mainNode.prev;
         mainNode.prev.next = newNode;
         mainNode.prev = newNode;
         currentSize++;
@@ -132,6 +137,7 @@ public class MyLinkedList<E> implements List<E> {
             if(i == index) {
                 return current.value;
             }
+            i++;
             current = current.next;
         }
         return null;
@@ -162,6 +168,7 @@ public class MyLinkedList<E> implements List<E> {
                 current.value = element;
                 return result;
             }
+            i++;
             current = current.next;
         }
         return null;
@@ -169,27 +176,108 @@ public class MyLinkedList<E> implements List<E> {
 
     @Override
     public void add(int index, E element) {
-
+        if(index > currentSize || index < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node<E> current = mainNode.next;
+        int i = 0;
+        while (current != mainNode || i >= currentSize) {
+            if(i == index) {
+                Node<E> newNode = new Node<E>(element);
+                newNode.next = current;
+                newNode.prev = current.prev;
+                current.prev.next = newNode;
+                current.prev = newNode;
+                currentSize++;
+                return;
+            }
+            i++;
+            current = current.next;
+        }
     }
 
     @Override
     public E remove(int index) {
+        if(index > currentSize || index < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node<E> current = mainNode.next;
+        int i = 0;
+        while (current != mainNode || i >= currentSize) {
+            if(i == index) {
+                current.prev.next = current.next;
+                current.next.prev = current.prev;
+                return current.value;
+            }
+            i++;
+            current = current.next;
+        }
         return null;
     }
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+        Node<E> current = mainNode.next;
+        int i = 0;
+        while (current != mainNode) {
+            if(current.value.equals(o)) {
+                return i;
+            }
+            i++;
+            current = current.next;
+        }
+        return -1;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return 0;
+        Node<E> current = mainNode.prev;
+        int i = 0;
+        while (current != mainNode) {
+            if(current.value.equals(o)) {
+                return i;
+            }
+            i++;
+            current = current.prev;
+        }
+        return -1;
     }
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
-        return null;
+        if(toIndex >= currentSize || toIndex < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        if(fromIndex >= currentSize || fromIndex < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        if(fromIndex >= toIndex) {
+            throw new IndexOutOfBoundsException();
+        }
+        List<E> result = new MyLinkedList<E>();
+        Node<E> current = mainNode.next;
+        int i = 0;
+        while (current != mainNode) {
+            if(i <= fromIndex && i < toIndex) {
+                result.add(current.value);
+            }
+            i++;
+            current = current.next;
+        }
+        return result;
+    }
+
+    @Override
+    public Object[] toArray() {
+        Object[] newArray = new Object[currentSize];
+        Node<E> current = mainNode.next;
+        int i = 0;
+        while (current != mainNode) {
+            newArray[i] = current.value;
+            i++;
+            current = current.next;
+        }
+        return newArray;
     }
 
     @Override
@@ -208,13 +296,20 @@ public class MyLinkedList<E> implements List<E> {
     }
 
     @Override
-    public Object[] toArray() {
-        return new Object[0];
-    }
-
-    @Override
+    @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] a) {
-        return null;
+        if (a.length < currentSize)
+            a = (T[])java.lang.reflect.Array.newInstance(
+                    a.getClass().getComponentType(), currentSize);
+        int i = 0;
+        Object[] result = a;
+        for (Node<E> current = mainNode.next; current != mainNode; current = current.next)
+            result[i++] = current.value;
+
+        if (a.length > currentSize)
+            a[currentSize] = null;
+
+        return a;
     }
 
 
@@ -245,12 +340,15 @@ public class MyLinkedList<E> implements List<E> {
         public void run() {
             while(checkLife) {
                 synchronized(MyLinkedList.this) {
-//                    for(int i = 0; i < currentSize; i++) {
-//                        if(System.currentTimeMillis()- array[i].createTime > lifetime) {
-//                            remove(i);
-//                            i--;
-//                        }
-//                    }
+                    Node<E> current = mainNode.next;
+                    int i = 0;
+                    while (current != mainNode) {
+                        if(System.currentTimeMillis() - current.creationTime > lifetime) {
+                            remove(i);
+                        }
+                        i++;
+                        current = current.next;
+                    }
                 }
                 try {
                     Thread.sleep(1000); //every 1 second
