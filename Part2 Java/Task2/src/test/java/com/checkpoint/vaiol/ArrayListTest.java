@@ -32,15 +32,16 @@ public class ArrayListTest {
 
 	@Test
 	public void testRemoveOldObject() throws InterruptedException {
-		MyArrayList<Integer> linkedList = new MyArrayList<Integer>();
-		linkedList.startLifeTimer(1000);
+		MyArrayList<Integer> arrayList = new MyArrayList<Integer>();
+		arrayList.startLifeTimer(500);
 
 		for(int i = 0; i < 10; i++) {
-			linkedList.add(i);
+			arrayList.add(i);
 		}
-		assertFalse(linkedList.isEmpty());
+		assertFalse(arrayList.isEmpty());
 		Thread.sleep(1010);
-		assertTrue(linkedList.isEmpty());
+		assertTrue(arrayList.isEmpty());
+		arrayList.stopLifeTimer();
 	}
 
 	@Test
@@ -175,6 +176,18 @@ public class ArrayListTest {
 		Object o[] = arr.toArray();
 		for (int i = 0; i < 5; i++) {
 			Assert.assertEquals(i, o[i]);
+		}
+	}
+
+	@Test
+	public void testForeach() {
+		MyArrayList<Integer> arr = new MyArrayList<Integer>();
+		for (int i = 0; i < 5; i++) {
+			arr.add(i);
+		}
+		int j = 0;
+		for (int i : arr) {
+			assertEquals(i, j++);
 		}
 	}
 }

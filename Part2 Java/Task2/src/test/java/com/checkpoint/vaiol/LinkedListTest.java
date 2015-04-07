@@ -42,6 +42,7 @@ public class LinkedListTest {
 		assertFalse(linkedList.isEmpty());
 		Thread.sleep(1010);
 		assertTrue(linkedList.isEmpty());
+		linkedList.stopLifeTimer();
 	}
 	
 	@Test
@@ -175,7 +176,19 @@ public class LinkedListTest {
 
 		Object o[] = arr.toArray();
 		for (int i = 0; i < 5; i++) {
-			Assert.assertEquals(i, o[i]);
+			assertEquals(i, o[i]);
+		}
+	}
+
+	@Test
+	public void testForeach() {
+		MyLinkedList<Integer> arr = new MyLinkedList<Integer>();
+		for (int i = 0; i < 5; i++) {
+			arr.add(i);
+		}
+		int j = 0;
+		for (int i : arr) {
+			assertEquals(i, j++);
 		}
 	}
 }

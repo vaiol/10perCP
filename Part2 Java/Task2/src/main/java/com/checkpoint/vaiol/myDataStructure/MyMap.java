@@ -65,7 +65,7 @@ public class MyMap<K, V> implements Map<K, V> {
     public Set<Entry<K, V>> entrySet() {
         return null;
     }
-    private class MyEntry<K,V> implements Map.Entry<K, V> {
+    private class MyEntry<K,V> implements Entry<K, V> {
         @Override
         public K getKey() {
             return null;
