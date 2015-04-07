@@ -1,5 +1,5 @@
 package com.checkpoint.vaiol.mobileNerwork;
 
 public enum UserStatus {
-    calls, surf, wait
+    calls, surf, wait, talk
 }

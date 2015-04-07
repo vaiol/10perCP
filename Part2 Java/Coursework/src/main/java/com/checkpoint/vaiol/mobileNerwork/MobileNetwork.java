@@ -2,8 +2,11 @@ package com.checkpoint.vaiol.mobileNerwork;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public abstract class MobileNetwork {
+
+    private static Random random = new Random();
     private final static int MAXIMUM_NUMBER_OF_OPERATORS = 4;
     private static List<Operator> operators = new LinkedList<Operator>();
 
@@ -33,5 +36,20 @@ public abstract class MobileNetwork {
             }
         }
         return null;
+    }
+
+    public synchronized static String generatePhoneNumber() {
+        String result = "+";
+        for(int i = 0; i < 10; i++) {
+            result += random.nextInt(10);
+        }
+        for (Operator o : operators) {
+            for (User user : o.getUsers()) {
+                if (user.getNumber().equals(result)) {
+                    generatePhoneNumber();
+                }
+            }
+        }
+        return result;
     }
 }

@@ -44,7 +44,7 @@ public class User {
     }
 
     public void setStatus(UserStatus status) {
-        if (status.equals(UserStatus.calls)) {
+        if (status.equals(UserStatus.calls) || status.equals(UserStatus.talk)) {
             available = false;
         } else {
             available = true;
@@ -97,7 +97,6 @@ public class User {
                 availableTowers.add(tower);
             }
         }
-
     }
 
     @Override
