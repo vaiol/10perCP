@@ -1,5 +1,6 @@
 package com.checkpoint.vaiol.mobileNerwork;
 
+import com.checkpoint.vaiol.mobileNerwork.customer.User;
 import com.checkpoint.vaiol.mobileNerwork.events.Event;
 
 import java.util.LinkedList;

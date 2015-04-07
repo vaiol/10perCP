@@ -1,4 +1,4 @@
-package com.checkpoint.vaiol.mobileNerwork;
+package com.checkpoint.vaiol.mobileNerwork.packages;
 
 public class Package {
     private String name; //unique id
@@ -107,41 +107,4 @@ public class Package {
         return result;
     }
 
-    //------------------------------ DEFAULT PACKAGES ----------------------
-
-    public static Package getBasicPackage() {
-        String name = "Basic Package";
-        double feePerDay = 0;
-        double feePerMonth = 0;
-        double feeOutgoingCallConnect = 0.10;
-        double feePerMinuteOnline = 0.10;
-        double feePerMinuteOffline = 0.50;
-        double feeMessage = 0.50;
-        double feeInternetUsage = 12.3;
-        return new Package(name, feePerDay, feePerMonth, feePerMinuteOnline, feePerMinuteOffline, feeMessage, feeInternetUsage, feeOutgoingCallConnect);
-    }
-
-    public static Package getPrepaidPackage() {
-        String name = "Prepaid Package";
-        double feePerDay = 5;
-        double feePerMonth = 0;
-        double feeOutgoingCallConnect = 0;
-        double feePerMinuteOnline = 0;
-        double feePerMinuteOffline = 0;
-        double feeMessage = 0;
-        double feeInternetUsage = 0.99;
-        return new Package(name, feePerDay, feePerMonth, feePerMinuteOnline, feePerMinuteOffline, feeMessage, feeInternetUsage, feeOutgoingCallConnect);
-    }
-
-    public static Package getUnlimitedPackage() {
-        String name = "Unlimited Package";
-        double feePerDay = 0;
-        double feePerMonth = 300;
-        double feeOutgoingCallConnect = 0;
-        double feePerMinuteOnline = 0;
-        double feePerMinuteOffline = 0;
-        double feeMessage = 0;
-        double feeInternetUsage = 0;
-        return new Package(name, feePerDay, feePerMonth, feePerMinuteOnline, feePerMinuteOffline, feeMessage, feeInternetUsage, feeOutgoingCallConnect);
-    }
 }

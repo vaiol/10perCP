@@ -1,4 +1,10 @@
-package com.checkpoint.vaiol.mobileNerwork;
+package com.checkpoint.vaiol.mobileNerwork.customer;
+
+import com.checkpoint.vaiol.mobileNerwork.MobileNetwork;
+import com.checkpoint.vaiol.mobileNerwork.Operator;
+import com.checkpoint.vaiol.mobileNerwork.Position;
+import com.checkpoint.vaiol.mobileNerwork.Tower;
+import com.checkpoint.vaiol.mobileNerwork.packages.Package;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,14 +17,14 @@ public class User {
     private List<Tower> availableTowers;
     private double balance;
     private boolean available;
-    private UserStatus status;
-    private Package aPackage;
+    private UserStatusEnum status;
+    private com.checkpoint.vaiol.mobileNerwork.packages.Package aPackage;
     private String number; //unique id
     private Position position;
 
     public User(Package aPackage, String number) {
         balance = 10;
-        status = UserStatus.wait;
+        status = UserStatusEnum.wait;
         position = new Position(0,0);
         this.aPackage = aPackage;
         this.number = number;
@@ -39,12 +45,12 @@ public class User {
     }
 
 
-    public UserStatus getStatus() {
+    public UserStatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(UserStatus status) {
-        if (status.equals(UserStatus.calls) || status.equals(UserStatus.talk)) {
+    public void setStatus(UserStatusEnum status) {
+        if (status.equals(UserStatusEnum.calls) || status.equals(UserStatusEnum.talk)) {
             available = false;
         } else {
             available = true;

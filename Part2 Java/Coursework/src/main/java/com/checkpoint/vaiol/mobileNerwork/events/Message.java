@@ -1,4 +1,4 @@
 package com.checkpoint.vaiol.mobileNerwork.events;
 
-public class Message implements Event {
+public class Message {
 }

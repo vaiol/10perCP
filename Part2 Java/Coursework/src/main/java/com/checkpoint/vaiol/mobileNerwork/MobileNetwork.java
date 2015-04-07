@@ -1,5 +1,7 @@
 package com.checkpoint.vaiol.mobileNerwork;
 
+import com.checkpoint.vaiol.mobileNerwork.customer.User;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -29,6 +31,14 @@ public abstract class MobileNetwork {
         return result;
     }
 
+    public synchronized static List<User> getAllUsers() {
+        List<User> result = new LinkedList<User>();
+        for (Operator o : operators) {
+            result.addAll(o.getUsers());
+        }
+        return result;
+    }
+
     public synchronized static Operator getMyOperator(User user) {
         for (Operator o : operators) {
             if(o.getUsers().contains(user)) {
@@ -43,11 +53,9 @@ public abstract class MobileNetwork {
         for(int i = 0; i < 10; i++) {
             result += random.nextInt(10);
         }
-        for (Operator o : operators) {
-            for (User user : o.getUsers()) {
-                if (user.getNumber().equals(result)) {
-                    generatePhoneNumber();
-                }
+        for (User user : getAllUsers()) {
+            if (user.getNumber().equals(result)) {
+                generatePhoneNumber();
             }
         }
         return result;
