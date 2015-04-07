@@ -99,17 +99,36 @@ public class Subscriber {
     }
 
     public void endTheCall() {
-        incomingCall.stopTalking();
+        boolean checkError1 = false;
+        boolean checkError2 = false;
+
+        if (incomingCall != null) {
+            incomingCall.stopTalking();
+            checkError1 = true;
+        }
+        if (outgoingCall != null) {
+            outgoingCall.stopTalking();
+            checkError2 = true;
+        }
+
+        if (checkError1 && checkError2) {
+            throw new RuntimeException("Impossible situation!");
+        }
     }
 
-    public void makeCall(String number) {
+    public boolean makeCall(String number) {
         if (availableTowers.isEmpty()) {
             System.out.println("Subscriber(" + this.number + "): don't have connection!");
+            return false;
+        }
+        if ( ! available) {
+            return false;
         }
         status = UserStatusEnum.calls;
         System.out.println("Subscriber(" + this.number + "): make new call to " + number);
-        availableTowers.get(random.nextInt(availableTowers.size())).handleCall(new Call(this, number));
-
+        outgoingCall = new Call(this, number);
+        availableTowers.get(random.nextInt(availableTowers.size())).handleCall(outgoingCall);
+        return true;
     }
 
     public void move(int x, int y) {

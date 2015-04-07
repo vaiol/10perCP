@@ -55,6 +55,7 @@ public class Call implements Runnable {
         }
         talkingTime = (int)(System.currentTimeMillis() - conversationStart);
         callee.setStatus(UserStatusEnum.wait);
+        calling.setStatus(UserStatusEnum.wait);
     }
 
     public String getCalleeNumber() {
