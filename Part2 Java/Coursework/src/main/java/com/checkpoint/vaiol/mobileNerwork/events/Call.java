@@ -1,18 +1,18 @@
 package com.checkpoint.vaiol.mobileNerwork.events;
 
-import com.checkpoint.vaiol.mobileNerwork.customer.User;
+import com.checkpoint.vaiol.mobileNerwork.customer.Subscriber;
 import com.checkpoint.vaiol.mobileNerwork.customer.UserStatusEnum;
 
 public class Call implements Runnable {
     private static final int MAX_RESPONSE_TIME = 5000;
     private long callStart;
     private Integer talkingTime;
-    private User calling; //тот кто вызывает
-    private User callee = null; //тот кого вызывают
+    private Subscriber calling; //тот кто вызывает
+    private Subscriber callee = null; //тот кого вызывают
     private String calleeNumber;
     private boolean putPhoneDown = false;
 
-    public Call(User calling, String calleeNumber) {
+    public Call(Subscriber calling, String calleeNumber) {
         talkingTime = null;
         callStart = System.currentTimeMillis();
         this.calling = calling;
@@ -33,6 +33,8 @@ public class Call implements Runnable {
                 e.printStackTrace();
             }
             if (System.currentTimeMillis() - callStart > MAX_RESPONSE_TIME) {
+                putPhoneDown = true;
+                calling.setStatus(UserStatusEnum.wait);
                 return;
             }
             if (putPhoneDown) {
@@ -63,7 +65,19 @@ public class Call implements Runnable {
         return talkingTime;
     }
 
-    public User getCalling() {
+    public Subscriber getCalling() {
         return calling;
+    }
+
+    public Subscriber getCallee() {
+        return callee;
+    }
+
+    public void setCallee(Subscriber callee) {
+        this.callee = callee;
+    }
+
+    public boolean isActive() {
+        return ! putPhoneDown;
     }
 }

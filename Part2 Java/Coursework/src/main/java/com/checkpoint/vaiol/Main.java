@@ -1,14 +1,13 @@
 package com.checkpoint.vaiol;
 
-import com.checkpoint.vaiol.mobileNerwork.operator.OperatorsNameEnum;
 
-import java.util.Random;
+import com.checkpoint.vaiol.mobileNerwork.Operator;
+import com.checkpoint.vaiol.mobileNerwork.Position;
+import com.checkpoint.vaiol.mobileNerwork.Tower;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class Main {
 
-    private static Random random = new Random();
-    public static void main(String[] args) {
-        System.out.println(OperatorsNameEnum.Kyivstar.name().equals("Kyevstar"));
-
-    }
 }

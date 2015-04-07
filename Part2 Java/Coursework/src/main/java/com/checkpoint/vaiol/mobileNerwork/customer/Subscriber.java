@@ -4,13 +4,13 @@ import com.checkpoint.vaiol.mobileNerwork.MobileNetwork;
 import com.checkpoint.vaiol.mobileNerwork.Operator;
 import com.checkpoint.vaiol.mobileNerwork.Position;
 import com.checkpoint.vaiol.mobileNerwork.Tower;
-import com.checkpoint.vaiol.mobileNerwork.packages.Package;
+import com.checkpoint.vaiol.mobileNerwork.events.Call;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class User {
+public class Subscriber {
 
     private static Random random = new Random();
 
@@ -18,18 +18,22 @@ public class User {
     private double balance;
     private boolean available;
     private UserStatusEnum status;
-    private com.checkpoint.vaiol.mobileNerwork.packages.Package aPackage;
     private String number; //unique id
     private Position position;
+    private int talkingBonusTime;
+    private int messageBonusCount;
+    private Call incomingCall = null;
+    private Call outgoingCall = null;
 
-    public User(Package aPackage, String number) {
+    public Subscriber(String number) {
         balance = 10;
         status = UserStatusEnum.wait;
         position = new Position(0,0);
-        this.aPackage = aPackage;
         this.number = number;
         availableTowers = new LinkedList<Tower>();
-        connectToNetwork();
+        talkingBonusTime = 0;
+        messageBonusCount = 0;
+        available = true;
     }
 
     public double getBalance() {
@@ -58,20 +62,54 @@ public class User {
         this.status = status;
     }
 
-    public Package getaPackage() {
-        return aPackage;
-    }
-
-    public void setaPackage(Package aPackage) {
-        this.aPackage = aPackage;
-    }
-
     public String getNumber() {
         return number;
     }
 
     public Position getPosition() {
         return position;
+    }
+
+    public int getTalkingBonusTime() {
+        return talkingBonusTime;
+    }
+
+    public int getMessageBonusCount() {
+        return messageBonusCount;
+    }
+
+    public void setMessageBonusCount(int messageBonusCount) {
+        this.messageBonusCount = messageBonusCount;
+    }
+
+    public void setTalkingBonusTime(int talkingBonusTime) {
+        this.talkingBonusTime = talkingBonusTime;
+    }
+
+
+    public void setIncomingCall(Call incomingCall) {
+        if (incomingCall != null) {
+            System.out.println("Subscriber(" + number + ") have new incoming call. Tink-Tink!!!");
+        }
+        this.incomingCall = incomingCall;
+    }
+
+    public void receiveCall() {
+        incomingCall.setCallee(this);
+    }
+
+    public void endTheCall() {
+        incomingCall.stopTalking();
+    }
+
+    public void makeCall(String number) {
+        if (availableTowers.isEmpty()) {
+            System.out.println("Subscriber(" + this.number + "): don't have connection!");
+        }
+        status = UserStatusEnum.calls;
+        System.out.println("Subscriber(" + this.number + "): make new call to " + number);
+        availableTowers.get(random.nextInt(availableTowers.size())).handleCall(new Call(this, number));
+
     }
 
     public void move(int x, int y) {
@@ -96,10 +134,12 @@ public class User {
     }
 
 
-    private void connectToNetwork() {
+
+
+    public void connectToNetwork() {
         Operator operator = MobileNetwork.getMyOperator(this);
         for (Tower tower : operator.getTowers()) {
-            if(tower.registerNewUser(this)) {
+            if(tower.registerNewSubscriber(this)) {
                 availableTowers.add(tower);
             }
         }
@@ -110,11 +150,15 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        User user = (User) o;
+        Subscriber subscriber = (Subscriber) o;
 
-        if (number != null ? !number.equals(user.number) : user.number != null) return false;
+        if (number != null ? !number.equals(subscriber.number) : subscriber.number != null) return false;
 
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Subscriber(" + number + "): " + status + ", " + balance;
+    }
 }
