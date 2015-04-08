@@ -15,7 +15,9 @@ import static org.junit.Assert.assertTrue;
 
 
 public class MainTest {
+    private static final double DELTA = 0.00001;
     private static Random random = new Random();
+
     private Operator operator;
     private Subscriber sub1;
     private Subscriber sub2;
@@ -28,12 +30,10 @@ public class MainTest {
 
         sub1 = operator.createNewSubscriber();
         sub2 = operator.createNewSubscriber();
-
-
     }
 
 
-    @Test
+    //@Test
     public void testCallingWithoutAnswer() { //вызов без ответа
         //абоненты бездействуют
         assertEquals(UserStatusEnum.wait, sub1.getStatus());
@@ -93,6 +93,10 @@ public class MainTest {
         //абоненты бездействуют
         assertEquals(UserStatusEnum.wait, sub1.getStatus());
         assertEquals(UserStatusEnum.wait, sub2.getStatus());
+
+        assertEquals(9.9, sub1.getBalance(), DELTA);
+        assertEquals(10, sub2.getBalance(), DELTA);
+
     }
 
 }

@@ -62,6 +62,23 @@ public class Operator implements Runnable {
         threadActive = false;
     }
 
+    private synchronized boolean sendCall(Subscriber subscriber, Call call) {
+        for (Tower tower : towers) {
+            if (tower.isAvailableSubscriber(subscriber)) {
+                if (subscriber.isAvailable()) {
+                    subscriber.setIncomingCall(call);
+                    if (call != null) {
+                        subscriber.setStatus(UserStatusEnum.calls);
+                    } else {
+                        subscriber.setStatus(UserStatusEnum.wait);
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     @Override
     public void run() {
         Integer time = 0;
@@ -72,33 +89,31 @@ public class Operator implements Runnable {
                 e.printStackTrace();
             }
             for (Call call : talkList) {
-                if ( ! call.isActive()) {
-                    if ((time = call.getTalkingTime()) != null) { // если разговор закончился
-                        if (users.containsKey(call.getCallee())) { //если вызываемый принадлежит к этому оператору
-                            //снимаем необходимое количество бабосов или бонусов:
-                            double fee = users.get(call.getCalling()).getFeePerMinuteOnline();
-                            int minute = ((time / 1000) / 60) + 1;
-                            if (fee != 0) {
-                                double price = minute * fee;
-                                call.getCalling().setBalance(call.getCalling().getBalance() - price);
-                            } else {
-                                call.getCalling().setTalkingBonusTime(call.getCalling().getTalkingBonusTime() - minute);
-                            }
-                            //закончили снимать бабосы
-                        } else { //если вызываемый НЕ принадлежит к этому оператору
-                            //снимаем необходимое количество бабосов или бонусов:
-                            double fee = users.get(call.getCalling()).getFeePerMinuteOffline();
-                            int minute = ((time / 1000) / 60) + 1;
-                            if (fee != 0) {
-                                double price = minute * fee;
-                                call.getCalling().setBalance(call.getCalling().getBalance() - price);
-                            } else {
-                                call.getCalling().setTalkingBonusTime(call.getCalling().getTalkingBonusTime() - minute);
-                            }
-                            //закончили снимать бабосы
+                if ((time = call.getTalkingTime()) != null) { // если разговор закончился
+                    if (users.containsKey(call.getCallee())) { //если вызываемый принадлежит к этому оператору
+                        //снимаем необходимое количество бабосов или бонусов:
+                        double fee = users.get(call.getCalling()).getFeePerMinuteOnline();
+                        int minute = ((time / 1000) / 60) + 1;
+                        if (fee != 0) {
+                            double price = minute * fee;
+                            call.getCalling().setBalance(call.getCalling().getBalance() - price);
+                        } else {
+                            call.getCalling().setTalkingBonusTime(call.getCalling().getTalkingBonusTime() - minute);
                         }
+                        //закончили снимать бабосы
+                    } else { //если вызываемый НЕ принадлежит к этому оператору
+                        //снимаем необходимое количество бабосов или бонусов:
+                        double fee = users.get(call.getCalling()).getFeePerMinuteOffline();
+                        int minute = ((time / 1000) / 60) + 1;
+                        if (fee != 0) {
+                            double price = minute * fee;
+                            call.getCalling().setBalance(call.getCalling().getBalance() - price);
+                        } else {
+                            call.getCalling().setTalkingBonusTime(call.getCalling().getTalkingBonusTime() - minute);
+                        }
+                        System.out.println("BBBELATTAAAA!!!");
+                        //закончили снимать бабосы
                     }
-
                     Subscriber callee;
                     if (call.getCallee() == null) {
                         callee = MobileNetwork.getUserByNumber(call.getCalleeNumber());
@@ -110,19 +125,18 @@ public class Operator implements Runnable {
                     talkList.remove(call);
                 }
 
+
             }
             for (Call call : callList) {
                 if (call.isActive()) {
                     Subscriber callee = MobileNetwork.getUserByNumber(call.getCalleeNumber());
                     if (callee.isAvailable()) {
-                        System.out.println();
                         callee.setIncomingCall(call);
                         callee.setStatus(UserStatusEnum.calls);
                         talkList.add(call);
                     }
                 }
                 callList.remove(call);
-
             }
         }
     }
