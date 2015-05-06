@@ -1,5 +1,7 @@
 <h1>KPI Check Point</h1>
 <p>Completing quests from KPI Check Point: </p>
+<h2>Part 3: Spring Framework</h2>
+<b>[AIM'er via SPRING](https://github.com/vaiol/AIMer-via-Spring)</b>
 <h2>Part 2: Java Core</h2>
 <b>Information:</b>
 <ul>
