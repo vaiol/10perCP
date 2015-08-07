@@ -1,4 +1,4 @@
-<h1>KPI Check Point</h1>
+# KPI Check Point
 <p>Completing quests from KPI Check Point: </p>
 <h2>Part 3: Spring Framework</h2>
 <b>[AIM'er via SPRING](https://github.com/vaiol/AIMer-via-Spring)</b>
@@ -16,17 +16,10 @@
         </li>
 </ul>
 <b>How to run:</b>
-<ul>
-        <li> 
-                Open pom.xml in IDE (for example InteliJ IDEA)
-        </li>
-        <li> 
-                mvn compile and Run Main -> com.checkpoint,vaiol.Main
-        </li>
-        <li> 
-                mvn compile and Run Test -> mvn test
-        </li>
-</ul>
+1. Open pom.xml in IDE (for example InteliJ IDEA)
+2. mvn compile and Run Main -> com.checkpoint.vaiol.Main
+3. mvn compile and Run Test -> mvn test
+
 <h2>Part 1: Design</h2>
 <b>Information:</b>
 <ul>
